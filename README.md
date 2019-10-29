@@ -25,8 +25,6 @@
 
 [![Product Name Screen Shot][product-screenshot]](./images/chess-game-example.png)
 
-There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need.
-
  Chess Game is an application created with react that allows players to compete against eachother playing a game of chess. Utilizing socket.io, players will compete in real-time. A message room is available between players/spectators. Ranking will also be implemented in order to match players into their specific skill level.
 
 ### Built With
