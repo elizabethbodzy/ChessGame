@@ -28,13 +28,17 @@
  Chess Game is an application created with react that allows players to compete against eachother playing a game of chess. Utilizing socket.io, players will compete in real-time. A message room is available between players/spectators. Ranking will also be implemented in order to match players into their specific skill level.
 
 ### Built With
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This section lists the major frameworks that were used to build our project. 
 * [Semantic UI](https://semantic-ui.com/)
 * [React] (https://reactjs.org/)
 * [Mongo,Mongoose] (https://www.mongodb.com/) (https://mongoosejs.com/)
 * [Socket.io] (https://socket.io/)
 
-<!-- USAGE EXAMPLES -->
+## Challenges
+The challenges our team faced within this project were:
+
+
+<!-- DEMO -->
 ## Demo
 
 Sign up or create an account to demo our fun and challenging chess game!
@@ -43,9 +47,11 @@ Sign up or create an account to demo our fun and challenging chess game!
 
 <!-- CONTACT -->
 ## Contact
-<a href="https://github.com/elizabethbodzy"> <h3> Elizabeth Bodzy Github </h3> </a>
-<a href="https://github.com/FeeterMcGeeter"><h3> Jeffrey Davis Github </h3> </a>
-<a href="https://github.com/fred-h-nguyen"><h3> Fred Nguyen Github </h3> </a>
+
+[Elizabeth Bodzy Github:](https://github.com/elizabethbodzy)
+[Jeffrey Davis Github:](https://github.com/FeeterMcGeeter)
+[Fred Nguyen Github:](https://github.com/fred-h-nguyen)
+
 
 Project Link: [https://github.com/elizabethbodzy/ChessGame](https://github.com/elizabethbodzy/ChessGame)
 
