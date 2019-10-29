@@ -48,9 +48,9 @@ Sign up or create an account to demo our fun and challenging chess game!
 <!-- CONTACT -->
 ## Contact
 
-[Elizabeth Bodzy Github:](https://github.com/elizabethbodzy)
-[Jeffrey Davis Github:](https://github.com/FeeterMcGeeter)
-[Fred Nguyen Github:](https://github.com/fred-h-nguyen)
+[Elizabeth Bodzy Github](https://github.com/elizabethbodzy) <br>
+[Jeffrey Davis Github](https://github.com/FeeterMcGeeter) <br>
+[Fred Nguyen Github](https://github.com/fred-h-nguyen)
 
 
 Project Link: [https://github.com/elizabethbodzy/ChessGame](https://github.com/elizabethbodzy/ChessGame)
