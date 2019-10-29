@@ -31,9 +31,9 @@
 ### Built With
 This section lists the major frameworks that were used to build our project. 
 * [Semantic UI](https://semantic-ui.com/)
-* [React] (https://reactjs.org/)
-* [Mongo,Mongoose] (https://www.mongodb.com/) (https://mongoosejs.com/)
-* [Socket.io] (https://socket.io/)
+* [React](https://reactjs.org/)
+* [Mongo,Mongoose] https://www.mongodb.com/) (https://mongoosejs.com/)
+* [Socket.io](https://socket.io/)
 
 ## Challenges
 The challenges our team faced within this project were:
