@@ -3,6 +3,11 @@ import './signUp.css';
 
 class SignUpForm extends Component {
 
+    // CLICK HANDLER FOR SIGN IN/ SIGN UP OVERLAY
+    overlayTransition = () => {
+        
+    }
+
     render() {
         return (
             <>
