@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Image } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import Board from '../Game/Board/Board'
 import ChatBox from '../ChatBox/ChatBox'
 
