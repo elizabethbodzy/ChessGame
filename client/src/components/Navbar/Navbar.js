@@ -13,7 +13,7 @@ import { Menu, Image } from 'semantic-ui-react'
         
       <Menu inverted>
           <Menu.Item>
-          <Image src='/images/header-logo.jpg' />   
+          <Image src='./images/header-logo.jpg' />   
         </Menu.Item>
 
         <Menu.Item
