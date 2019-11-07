@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Image } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
  class Navbar extends Component {
   state = { activeItem: 'home' }
@@ -13,7 +13,7 @@ import { Menu, Image } from 'semantic-ui-react'
         
       <Menu inverted>
           <Menu.Item>
-          <Image src='/images/header-logo.jpg' />   
+          <img src='./images/header-logo.jpg' />   
         </Menu.Item>
 
         <Menu.Item
@@ -21,15 +21,17 @@ import { Menu, Image } from 'semantic-ui-react'
           active={activeItem === 'home'}
           onClick={this.handleItemClick}
         />
-        <Menu.Item
-          name='messages'
-          active={activeItem === 'messages'}
-          onClick={this.handleItemClick}
-         
-        />
+        
         <Menu.Item
           name='profile'
           active={activeItem === 'profile'}
+          onClick={this.handleItemClick}
+          
+         
+        />
+        <Menu.Item
+          name='saved'
+          active={activeItem === 'saved games'}
           onClick={this.handleItemClick}
           
          
