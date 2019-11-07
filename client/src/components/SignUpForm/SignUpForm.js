@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
-import './signUp.css';
+import './signup.css';
 
 class SignUpForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            toggle: false
+        }
+    };
 
-    // CLICK HANDLER FOR SIGN IN/ SIGN UP OVERLAY
-    overlayTransition = () => {
-        
+    toggleForm = () => {
+        this.setState({
+            toggle: !this.state.toggle
+        })
     }
-
+    
     render() {
         return (
             <>
-                <div className='container' id='container'>
+                <div className={this.state.toggle ? 'container right-panel-active' : 'container'} id='container'>
                     {/* ===== SIGN UP FORM ===== */}
                     <div className='form-container sign-up-container'>
                         <form action='#'>
@@ -38,12 +45,12 @@ class SignUpForm extends Component {
                             <div className='overlay-panel overlay-left'>
                                 <h1>Welcome Back!</h1>
                                 <p>To reconnect with us, please sign in.</p>
-                                <button className='ghost' id='signIn'>Sign In</button>
+                                <button className='ghost' id='signIn' onClick={this.toggleForm}>Sign In</button>
                             </div>
                             <div className='overlay-panel overlay-right'>
                                 <h1>Hello, Player!</h1>
                                 <p>Sign Up to start playing chess online!</p>
-                                <button className='ghost' id='signUp'>Sign Up</button>
+                                <button className='ghost' id='signUp' onClick={this.toggleForm}>Sign Up</button>
                             </div>
                         </div>
                     </div>
