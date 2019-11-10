@@ -3,6 +3,7 @@ import pieces from '../pieces'
 const { King, Queen, Bishop, Knight, Rook, Pawn } = pieces;
 
 const initializeBoard = () => {
+    //create a null array
     const squares = Array(64).fill(null)
     //initialize Pawns
     squares[48] = new Pawn(1);
