@@ -5,8 +5,9 @@ import initializeBoard from '../../helper/initializeBoard';
 class Game extends React.Component {
     state = {
         board: [],
-        squares: initializeBoard()
-
+        squares: initializeBoard(),
+        coordinates: [],
+        hasCoordinate: false
     }
 
     initializeBoardState = () => {
@@ -22,7 +23,7 @@ class Game extends React.Component {
         this.setState({ board })
     }
 
-    componentDidUpdate() {}
+    componentDidUpdate() { }
 
 
     movePiece = (start = [], end = []) => {
@@ -30,15 +31,24 @@ class Game extends React.Component {
         let startPiece = board[start[1]][start[0]]
         board[start[1]][start[0]] = board[end[1]][end[0]]
         board[end[1]][end[0]] = startPiece
-        this.setState({ board: board, squares: board.flat() })
+        this.setState({ board: board, squares: board.flat()})
+    }
+
+    getFirstCoordinate = (x, y) => {
+        this.setState({ coordinates: [x, y]})
+    }
+
+    handleMovePiece = (x, y) => {
+        this.movePiece(this.state.coordinates, [x, y])
     }
 
     render() {
-        console.log(this.state.squares)
+        console.log(this.state.hasCoordinate)
         return (
             <>
                 <Board squares={this.state.squares}
-                    click={() => this.movePiece([0, 0], [0, 5])} />
+                    getFirstCoordinate={this.getFirstCoordinate}
+                    handleMove={this.handleMovePiece} />
             </>
         )
     }

@@ -4,6 +4,9 @@ import Piece from '../Piece/Piece';
 
 class Board extends React.Component {
 
+    state = {
+        hasCoordinates: false
+    }
     renderSquare(i, item) {
         const x = i % 8;
         const y = Math.floor(i / 8);
@@ -11,7 +14,8 @@ class Board extends React.Component {
         const piece = item || { icon: null }
         return (
             <div key={i} style={{ width: '12.5%', height: '12.5%' }}
-                onClick={this.props.click}>
+                onClick={
+                    !this.state.hasCoordinates ? () => { this.props.getFirstCoordinate(x, y); this.setState({ hasCoordinates: true }) } : () => { this.props.handleMove(x, y); this.setState({ hasCoordinates: false }) }}>
                 <Square black={black}>
                     <Piece icon={piece.icon} label={piece.label} />
                 </Square>
