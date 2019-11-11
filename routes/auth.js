@@ -1,103 +1,75 @@
 const express = require('express');
 const router = require('express').Router();
-const path = require('path');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const secret = require('../config/secret');
 const User = require('../model/User');
 
-router.get('/user', (req, res) => {
-    if (req.isAuthenticated()) {
-        const currentUser = req.session.passport.user;
-        console.log(currentUser);
+// VALIDATING PASSWORD
+const isValidPassword = (typedPassword, password) => {
+    return bcrypt.compareSync(typedPassword, password);
+};
 
-        User.findOne({ _id: currentUser })
-            .then(dbUser => {
-                const user = {
-                    logginIn: true,
-                    userName: dbUser.userName,
-                    email: dbUser.email
-                }
-                console.log(user);
-                res.json(user);
-            });
-    } else {
-        const user = {
-            logginIn: false,
-            userName: '',
-            email: ''
-        }
-        res.json(user);
-    }
-});
-
-// LOCAL AUTH SIGN UP
+// SIGN UP ROUTE
 router.post('/signup', (req, res, next) => {
-    passport.authenticate('local-signup', (err, user, info) => {
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-
-        if (!user) {
-            console.log('Not a User');
-            return res.send('Please re-enter your email and password');
-        }
-
-        req.login(user, (err) => {
-            if (err) {
-                console.log('auth error');
-                return next(err);
+    User.find({ email: req.body.email })
+        .then(user => {
+            if (user.length >= 1) {
+                return res.json({ error: 'An account with that email already exists.' })
+            } else {
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).json({ error: err });
+                    } else {
+                        let newUser = new User({
+                            userName: req.body.userName,
+                            email: req.body.email,
+                            password: hash
+                        })
+                        newUser.save()
+                            .then(result => {
+                                console.log(result);
+                                res.status(201).json({ message: 'Sign up successful!' })
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                res.status(500).json(
+                                    {
+                                        message: 'Unable to create user!',
+                                        error: err
+                                    });
+                            });
+                    }
+                })
             }
-
-            res.cookie('userName', req.user.userName);
-            res.cookie('email', req.body.email);
-            res.cookie('user_id', req.user.id);
-            console.log('confirm');
-            return res.redirect('/');
         })
-    })(req, res, next);
+        .catch(err => console.log(err));
 });
 
-// LOCAL AUTH SIGN IN
-router.post('/signin', (req, res, next) => {
-    passport.authenticate('local-signin', (err, user, info) => {
-        if (err) {
-            console.log(err);
-            return next(err);
-        }
-
-        if (!user) {
-            console.log('not a user');
-            req.flash('notify', 'This is a text notification.');
-            return res.send('Please re-enter your email and password');
-        }
-
-        req.login(user, (err) => {
-            if (err) {
-                return next(err);
+// SIGN IN ROUTE
+router.post('/signin', (req, res) => {
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if (!user) {
+                return res.json({ error: 'Please enter a valid email or password.'});
+            } else {
+                if (isValidPassword(req.body.password, user.password)) {
+                    let token = jwt.sign(user.toJSON(), secret.secret);
+                    res.json(
+                        { 
+                            success: true, 
+                            token: 'JWT ' + token 
+                        })
+                } else {
+                    return res.json({ error: 'Please enter a vaild email or password.'});
+                }
             }
-
-            res.cookie('userName', user[0].userName);
-            res.cookie('email', user[0].email);
-            res.cookie('user_id', user[0]._id);
-            var userI = { username: user[0].userName, email: user[0].email };
-            return res.json(userI);
         })
-    })(req, res, next);
+        .catch(err => console.log(err));
 });
 
-router.get('/logout', function (req, res) {
-    req.session.destroy(function (err) {
-        if (err) {
-            console.log(err)
-        }
-
-        res.clearCookie('user_id');
-        res.clearCookie('userName');
-        res.clearCookie('email');
-        res.clearCookie('connect.sid');
-        res.redirect('/');
-    });
-});
+router.get('/signout');
 
 module.exports = router;

@@ -2,23 +2,13 @@ import axios from 'axios';
 
 export default {
     createUser: (userData) => {
-        return axios.post('/api/user/signup', userData);
+        return axios.post('/auth/signup', userData);
     },
-
-    getUser: () => {
-        return axios.get('/auth/user');
-    },
-
-    authenticateUser: (userData) => {
-        return axios('auth/signup', 
-        {
-            method: 'POST',
-            data: userData,
-            withCredentials: true
-        })
-    },
-
-    logout: () => {
-        return axios.get('/auth/user');
+    getCurrentUser: () => {
+        return axios.get('/api/user/currentUser', {
+            headers: {
+                Authorization: localStorage.getItem('jwtToken')
+            }
+        });
     }
-}
+};

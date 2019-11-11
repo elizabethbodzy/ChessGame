@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './signup.css';
+import axios from 'axios';
 import API from '../../utils/API';
+import './signup.css';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -11,82 +12,57 @@ class SignUpForm extends Component {
             userName: '',
             email: '',
             password: '',
+            createdUser: false,
+            logginIn: false,
+            error: null
         }
-    };
-
-    componentDidMount() {
-        API.getUser()
-            .then(res => {
-                this.setState({ user: res.data })
-                console.log(res.data);
-            })
-            .catch(err => {
-                throw err;
-            });
     };
 
     handleInputChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
 
-    handleSignUpSubmit = event => {
-        event.preventDefault();
-        if (this.state.userName && this.state.email && this.state.password) {
-            fetch('/auth/signup',
-                {
-                    method: 'POST',
-                    credentials: 'include',
-                    mode: 'cors',
-                    body: JSON.stringify({
-                        email: this.state.email,
-                        password: this.state.password,
-                        userName: this.state.userName
-                    }),
-                    headers: new Headers({
-                        'Content-Type': 'application/json'
-                    })
+    handleSignUp = (userName, email, password) => {
+        API.createUser({
+            userName: userName,
+            email: email,
+            password: password
+        })
+            .then(res => {
+                this.setState({
+                    userName: '',
+                    email: '',
+                    password: ''
                 })
-                .then(response => {
-                    console.log(response);
-                    window.location.href = '/home';
-                })
-                .catch(err => console.log(err));
-
-            this.setState({
-                userName: '',
-                email: '',
-                password: ''
-            });
-        } else {
-            console.log('Please fill out all fields.');
-        }
-    };
-
-    handleSignInSubmit = event => {
-        event.preventDefault();
-        fetch('/auth/signin',
-            {
-                method: 'POST',
-                credentials: 'include',
-                mode: 'cors',
-                body: JSON.stringify({
-                    email: this.state.email,
-                    password: this.state.password
-                }),
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                })
-            })
-            .then(response => {
-                console.log(response);
-                window.location.href = "/home";
             })
             .catch(err => console.log(err));
+    };
 
-            this.setState({
-                email: '',
-                password: ''
-            });
+    updateUser = () => {
+        API.getCurrentUser()
+            .then(res => {
+                this.setState({
+                    user: res.data.user,
+                    logginIn: true
+                })
+            })
+            .catch(err => console.log(err));
+    };
+
+    handleSignIn = event => {
+        event.preventDefault();
+        const { email, password } = this.state;
+        axios.post('/auth/signin', { email, password })
+            .then(res => {
+                localStorage.setItem('jwtToken', res.data.token);
+                if (res.data.success) {
+                    this.updateUser();
+                }
+                if (res.data.error) {
+                    this.setState({ error: res.data.error });
+                }
+            })
+            .catch(err => console.log(err));
     };
 
     toggleForm = () => {
@@ -98,6 +74,18 @@ class SignUpForm extends Component {
     render() {
         return (
             <>
+                {/*MAIN TITLE*/}
+                <div className='title-container'>
+                    <div className='title-square'>C</div>
+                    <div className='title-square'>H</div>
+                    <div className='title-square'>E</div>
+                    <div className='title-square'>C</div>
+                    <div className='title-square'>K</div>
+                    <div className='title-square'>M</div>
+                    <div className='title-square'>A</div>
+                    <div className='title-square'>T</div>
+                    <div className='title-square'>E</div>
+                </div>
                 <div className={this.state.toggle ? 'container right-panel-active' : 'container'} id='container'>
                     {/* ===== SIGN UP FORM ===== */}
                     <div className='form-container sign-up-container'>
@@ -121,7 +109,7 @@ class SignUpForm extends Component {
                                 onChange={this.handleInputChange}
                                 type='password'
                                 placeholder='Password' />
-                            <button onClick={this.handleSignUpSubmit}>Sign Up</button>
+                            <button onClick={this.handleSignUp}>Sign Up</button>
                         </form>
                     </div>
                     {/* ===== SIGN IN FORM ===== */}
@@ -141,7 +129,7 @@ class SignUpForm extends Component {
                                 type='password'
                                 placeholder='Password' />
                             <a href='#'>Forgot your password?</a>
-                            <button onClick={this.handleSignInSubmit}>Sign In</button>
+                            <button onClick={this.handleSignIn}>Sign In</button>
                         </form>
                     </div>
                     {/* ===== OVERLAY CONTAINER FOR THE ENTIRE FORM ===== */}

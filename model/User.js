@@ -8,7 +8,6 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
     userName: {
         type: String,
-        trim: true,
         required: true,
         unique: true
     }, 
@@ -53,7 +52,7 @@ var userSchema = new Schema({
 });
 
 // CREATING THE USER MODEL USING THE USERSCHEMA
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 // EXPORTING THE USER MODEL
 module.exports = User;
