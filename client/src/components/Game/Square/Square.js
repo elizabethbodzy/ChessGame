@@ -2,7 +2,7 @@ import React from 'react';
 
 class Square extends React.Component {
 
-    color = this.props.black ? 'black' : 'white'
+    color = this.props.black ? 'brown' : 'white'
     render() {
         return (
             <div
