@@ -88,7 +88,6 @@ io.on("connection", (socket) => {
 
 });
 
-server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 
 // START THE SERVER
 // db.sequelize.sync(syncOptions).then(function () {
