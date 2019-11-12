@@ -8,6 +8,15 @@ class Knight extends Piece {
             2: [[1, 0], [6, 0]]
         }
         this.label = 'knight'
+
+        this.validMove = function (start = [], end = []) {
+            const x = end[0] - start[0]
+            const y = end[1] - start[1]
+            return (
+                (Math.abs(x) === 1 && Math.abs(y) === 2) ||
+                (Math.abs(x) === 2 && Math.abs(y) === 1)
+            )
+        }
     }
 }
 

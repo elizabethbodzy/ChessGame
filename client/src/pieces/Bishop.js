@@ -8,6 +8,15 @@ class Bishop extends Piece {
             2: [[2, 0], [5, 0]]
         }
         this.label = 'bishop'
+
+        this.validMove = function (start = [], end = []) {
+            const x = end[0] - start[0]
+            const y = end[1] - start[1]
+
+            return (
+               ((Math.abs(x) > 0 && Math.abs(x) <= 7) && x === y)
+            )
+        }
     }
 }
 
