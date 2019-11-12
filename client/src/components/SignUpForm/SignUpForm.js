@@ -44,7 +44,13 @@ class SignUpForm extends Component {
             .then(res => {
                 this.setState({
                     user: res.data.user,
-                    logginIn: true
+                    logginIn: true,
+                })
+            })
+            .then(res => {
+                this.setState({
+                    email: '',
+                    password: ''
                 })
             })
             .catch(err => console.log(err));
