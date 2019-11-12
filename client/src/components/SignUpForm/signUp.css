@@ -15,6 +15,35 @@ body {
     margin: -20px 0 50px;
 }
 
+/* MAIN TITLE */
+.title-container {
+    height: 85.33px;
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.title-square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 85.33px;
+    border: 2px solid #000;
+    border-right: none;
+    font-size: 40px;
+}
+
+.title-square:nth-of-type(9) {
+    border-right: 2px solid #000;
+}
+
+.title-square:nth-of-type(odd) {
+    color: #fff;
+    background: #000;
+}
+
+/* SIGN UP FORM */
 h1 {
     font-weight: 700;
     margin: 0;
