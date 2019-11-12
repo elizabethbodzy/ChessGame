@@ -1,12 +1,12 @@
 // REQUIRING MONGOOSE
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // CREATING A SCHEMA CLASS USING MONGOOSE'S SCHEMA METHOD
 var Schema = mongoose.Schema;
 
 // CREATING THE USER SCHEMA WITH OUR SCHEMA CLASS
 var userSchema = new Schema({
-    username: {
+    userName: {
         type: String,
         required: true,
         unique: true
@@ -15,18 +15,33 @@ var userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        match: [/.+@.+\..+/, "Please enter a valid e-mail address"]
     },
 
-    rating: {
-        type: Number,
-        default: 500
+    authMethod: {
+        type: String
+    },
+
+    socialID: {
+        type: String
     },
 
     password: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        validate: [
+            function(input) {
+                return input.length >= 6;
+            },
+            'Password must be at least 6 characters'
+        ]
+    },
+
+    rating: {
+        type: Number,
+        default: 500
     },
 
     image: String,
@@ -37,7 +52,7 @@ var userSchema = new Schema({
 });
 
 // CREATING THE USER MODEL USING THE USERSCHEMA
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 // EXPORTING THE USER MODEL
 module.exports = User;

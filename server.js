@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const passport = require('passport');
 const routes = require('./routes');
 const http = require('http');
 const cors = require('cors');
@@ -23,13 +25,14 @@ app.use(cors());
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }
 
-// ADD API AND VIEW ROUTES
-app.use(routes);
+// PASSPORT CONFIG
+require("./config/passport")(passport)
 
 
 // SENDING EVERY OTHER REQUEST TO THE REACT APP AND DEFINE ANY API ROUTES BEFORE THIS RUNS
