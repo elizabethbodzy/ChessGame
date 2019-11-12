@@ -18,7 +18,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-app.use(router);
+// app.use(router);
 app.use(cors());
 
 
