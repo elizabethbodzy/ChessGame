@@ -50,6 +50,14 @@ class Game extends React.Component {
     }
 
     handleMovePiece = (x, y) => {
+        //get piece
+        const x = this.state.coordinates[0]
+        const y = this.state.coordinates[1]
+        const board = this.state.board
+        const piece = board[y][x]
+       
+        
+        //check piece logic
         this.movePiece(this.state.coordinates, [x, y])
     }
 
