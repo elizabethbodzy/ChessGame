@@ -1,7 +1,14 @@
 import React from 'react'
 import { Grid } from 'semantic-ui-react'
 import Board from '../Game/Board/Board'
-import ChatBox from '../ChatBox/ChatBox'
+// import ChatBox from '../ChatBox/ChatBox'
+// import Chat from '../Chat/Chat';
+import Input from '../Input/Input';
+
+import InfoBar from '../InfoBar/InfoBar';
+// import Join from '../Join/Join';
+
+
 
 const GameContainer = () => (
   <Grid celled>
@@ -9,7 +16,11 @@ const GameContainer = () => (
 
     <Grid.Row>
       <Grid.Column width={3}>
-          <ChatBox />
+        {/* <Join /> */}
+          <InfoBar />
+                    {/* <Chat /> */}
+
+          <Input />
       </Grid.Column>
       <Grid.Column width={9}>
         <Board></Board>

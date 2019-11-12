@@ -2,15 +2,23 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const routes = require('./routes');
-// var socket = require("socket.io");
-var http = require('http').Server(app);
+const http = require('http');
+const cors = require('cors');
+const socketio = require('socket.io');
 
-const io = require('socket.io')(http);
+const { addUser, removeUser, getUser, getUsersInRoom} = require('./users.js');
 
-var db = require('./model');
+// var db = require('./model');
 
 const PORT = process.env.PORT || 3001;
+const router = require('./router');
 const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
+
+app.use(router);
+app.use(cors());
+
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
@@ -23,11 +31,6 @@ if (process.env.NODE_ENV === 'production') {
 // ADD API AND VIEW ROUTES
 app.use(routes);
 
-// var syncOptions = { force: false};
-
-// if (process.env.NODE_ENV === "test") {
-//     syncOptions.force = true;
-// }
 
 // SENDING EVERY OTHER REQUEST TO THE REACT APP AND DEFINE ANY API ROUTES BEFORE THIS RUNS
 app.get("*", (req, res) => {
@@ -41,19 +44,48 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/chess_game', { 
 
 
 
-io.on("connection", function (socket) {
-    console.log("Made socket connection", socket.id);
+io.on("connection", (socket) => {
+    // console.log('We have a new connection!!');
+    socket.on('join', ({name, room}, callback) => {
+        // console.log(name, room);
 
-    socket.on("chat", function (data) {
-        io.sockets.emit("chat", data);
+        const { error, user } = addUser({id: socket.id, name, room});
+
+        if(error) return callback(error);
+
+        socket.join(user.room);
+
+        socket.emit('message', { user: 'admin', text: `${user.name}, welcome to the room ${user.room}`})
+        socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name}, has joined!`});
+       
+
+        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
+
+        callback();
+
+    })
+
+    socket.on("sendMessage", (message, callback) => {
+        const user = getUser(socket.id);
+
+        io.to(user.room).emit('message', { user: user.name, text: message});
+
+        callback();
     });
 
-    socket.on("typing", function (data) {
-        socket.broadcast.emit("typing", data);
-    });
+    socket.on('disconnect', () => {
+        const user = removeUser(socket.id);
+
+        if(user) {
+            io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.`})
+            io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
+
+        }
+    })
+
 });
 
-io.listen(8000);
+server.listen(PORT, () => console.log(`Server has started on port ${PORT}`));
 
 // START THE SERVER
 // db.sequelize.sync(syncOptions).then(function () {
