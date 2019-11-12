@@ -30,7 +30,7 @@ class Game extends React.Component {
         const board = this.state.board;
         const startPiece = board[start[1]][start[0]]
         let capturedPiece
-        if(board[end[1]][end[0]] === null) {
+        if (board[end[1]][end[0]] === null) {
             //logic to move piece
             board[start[1]][start[0]] = board[end[1]][end[0]]
             board[end[1]][end[0]] = startPiece
@@ -41,7 +41,6 @@ class Game extends React.Component {
             board[end[1]][end[0]] = startPiece;
         }
         this.setState({ board: board, squares: board.flat() })
-        console.log(capturedPiece)
         return capturedPiece
     }
 
@@ -51,18 +50,23 @@ class Game extends React.Component {
 
     handleMovePiece = (x, y) => {
         //get piece
-        const x = this.state.coordinates[0]
-        const y = this.state.coordinates[1]
+        const startX = this.state.coordinates[0]
+        const startY = this.state.coordinates[1]
         const board = this.state.board
-        const piece = board[y][x]
-       
-        
+        const piece = board[startY][startX] || null
+
+        // console.log(this.state.coordinates)
         //check piece logic
-        this.movePiece(this.state.coordinates, [x, y])
+        if (piece === null) {
+            console.log('no piece')
+        } else if (piece.validMove(this.state.coordinates, [x, y])) {
+            this.movePiece(this.state.coordinates, [x, y])
+        } else {
+            console.log('not valid move')
+        }
     }
 
     render() {
-        console.log(this.state.hasCoordinate)
         return (
             <>
                 <Board squares={this.state.squares}

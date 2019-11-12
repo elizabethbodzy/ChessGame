@@ -16,7 +16,7 @@ class Queen extends Piece {
             return (
                 ((Math.abs(x) > 0 && Math.abs(x) <= 7) && y === 0) ||
                 ((Math.abs(y) > 0 && Math.abs(y) <= 7) && x === 0) ||
-                ((Math.abs(x) > 0 && Math.abs(x) <= 7) && x === y)
+                ((Math.abs(x) > 0 && Math.abs(x) <= 7) && (x === y || x === -y))
             )
         }
     }

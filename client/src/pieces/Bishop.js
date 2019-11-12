@@ -14,7 +14,7 @@ class Bishop extends Piece {
             const y = end[1] - start[1]
 
             return (
-               ((Math.abs(x) > 0 && Math.abs(x) <= 7) && x === y)
+                ((Math.abs(x) > 0 && Math.abs(x) <= 7) && (x === y || x === -y))
             )
         }
     }
