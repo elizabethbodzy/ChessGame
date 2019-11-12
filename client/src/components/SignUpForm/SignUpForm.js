@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import API from '../../utils/API';
-import './signup.css';
+import './signUp.css';
 
 class SignUpForm extends Component {
     constructor(props) {
