@@ -11,7 +11,7 @@ class Pawn extends Piece {
         //define movement pattern for pawns -1 means go down 1 means go up
         this.orientation = orientation
 
-        this.hasMoved = true
+        this.hasMoved = false
 
         this.validMove = function (start = [], end = []) {
             const x = end[0] - start[0]
