@@ -13,22 +13,24 @@ const isValidPassword = (typedPassword, password) => {
 
 // SIGN UP ROUTE
 router.post('/signup', (req, res, next) => {
+    console.log(req.body);
     User.find({ email: req.body.email })
         .then(user => {
-            if (user.length >= 1) {
-                return res.json({ error: 'An account with that email already exists.' })
-            } else {
+            if (user.length > 0) {
+                return res.status(409).json({ error: 'An account with that email already exists.' });
+            }
+            
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
                         console.log(err);
                         return res.status(500).json({ error: err });
                     } else {
-                        let newUser = new User({
+                        let newUser = {
                             userName: req.body.userName,
                             email: req.body.email,
                             password: hash
-                        })
-                        newUser.save()
+                        }
+                        User.create(newUser)
                             .then(result => {
                                 console.log(result);
                                 res.status(201).json({ message: 'Sign up successful!' })
@@ -43,7 +45,6 @@ router.post('/signup', (req, res, next) => {
                             });
                     }
                 })
-            }
         })
         .catch(err => console.log(err));
 });

@@ -8,18 +8,17 @@ const routes = require('./routes');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// PASSPORT CONFIG
-require("./config/passport")(passport)
-
-app.use(routes);
-
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }
+
+// PASSPORT CONFIG
+require("./config/passport")(passport)
 
 // SENDING EVERY OTHER REQUEST TO THE REACT APP AND DEFINE ANY API ROUTES BEFORE THIS RUNS
 app.get("*", (req, res) => {

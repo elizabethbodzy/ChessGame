@@ -22,11 +22,12 @@ class SignUpForm extends Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
-    handleSignUp = (userName, email, password) => {
+    handleSignUp = (event) => {
+        event.preventDefault();
         API.createUser({
-            userName: userName,
-            email: email,
-            password: password
+            userName: this.state.userName,
+            email: this.state.email,
+            password: this.state.password
         })
             .then(res => {
                 this.setState({
