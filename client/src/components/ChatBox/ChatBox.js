@@ -1,97 +1,65 @@
-import React from 'react'
-import { Comment, Header } from 'semantic-ui-react'
+// import React from 'react'
+// import { Comment, Header, Form, Button } from 'semantic-ui-react'
+// import Comment from './Comment'
+// import openSocket from 'socket.io-client'
 
-const ChatBox = () => (
-  <div>
-    <Comment.Group size='mini'>
-      <Header as='h3' dividing>
-       Messages
-      </Header>
 
-      <Comment>
-        <Comment.Avatar as='a' src='/images/avatar/small/matt.jpg' />
-        <Comment.Content>
-          <Comment.Author as='a'>Matt</Comment.Author>
-          <Comment.Metadata>
-            <span>Today at 5:42PM</span>
-          </Comment.Metadata>
-          <Comment.Text>How artistic!</Comment.Text>
-          <Comment.Actions>
-            <a>Reply</a>
-          </Comment.Actions>
-        </Comment.Content>
-      </Comment>
-      <Comment>
-        <Comment.Avatar as='a' src='/images/avatar/small/joe.jpg' />
-        <Comment.Content>
-          <Comment.Author as='a'>Joe Henderson</Comment.Author>
-          <Comment.Metadata>
-            <span>5 days ago</span>
-          </Comment.Metadata>
-          <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-        </Comment.Content>
-      </Comment>
-    </Comment.Group>
 
-    <Comment.Group size='mini'>
-     
+// class ChatBox extends React.Component {
+//     state = {
+//         message: '',
+//         name: '',
+//         image: '',
+//         messages: []
+//     }
 
-      <Comment>
-        <Comment.Avatar as='a' src='/images/avatar/small/matt.jpg' />
-        <Comment.Content>
-          <Comment.Author as='a'>Matt</Comment.Author>
-          <Comment.Metadata>
-            <span>Today at 5:42PM</span>
-          </Comment.Metadata>
-          <Comment.Text>How artistic!</Comment.Text>
-          <Comment.Actions>
-            <a>Reply</a>
-          </Comment.Actions>
-        </Comment.Content>
-      </Comment>
-      <Comment>
-        <Comment.Avatar as='a' src='/images/avatar/small/joe.jpg' />
-        <Comment.Content>
-          <Comment.Author as='a'>Joe Henderson</Comment.Author>
-          <Comment.Metadata>
-            <span>5 days ago</span>
-          </Comment.Metadata>
-          <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-        </Comment.Content>
-      </Comment>
-    </Comment.Group>
+//     // sendSocketIO = (data) => {
+//     //     //send chat 
+//     //     socket.emit("chat", data)
+//     // }
 
-    <Comment.Group size='mini'>
-      
+//     // handleInput = (event) => {
+//     //     this.setState ({ message: event.target.value})
+//     // }
 
-      <Comment>
-        <Comment.Avatar as='a' src='/images/avatar/small/matt.jpg' />
-        <Comment.Content>
-          <Comment.Author as='a'>Matt</Comment.Author>
-          <Comment.Metadata>
-            <span>Today at 5:42PM</span>
-          </Comment.Metadata>
-          <Comment.Text>How artistic!</Comment.Text>
-          <Comment.Actions>
-            <a>Reply</a>
-          </Comment.Actions>
-        </Comment.Content>
-      </Comment>
-      <Comment>
-        <Comment.Avatar as='a' src='/images/avatar/small/joe.jpg' />
-        <Comment.Content>
-          <Comment.Author as='a'>Joe Henderson</Comment.Author>
-          <Comment.Metadata>
-            <span>5 days ago</span>
-          </Comment.Metadata>
-          <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
-        </Comment.Content>
-      </Comment>
-    </Comment.Group>
+//     // handleChatSubmit = (event) => {
+//     //     event.preventDefault();
+//     //     this.sendSocketIO({message: this.state.message})
+//     // }
+
+//     // componentDidMount() {
+//     //     socket.on("chat", (data) => {
+//     //         this.setState({ receivedMessage: data})
+//     //     })
+//     // }
+
+//     // componentDidUpdate() {
+
+//     // }
     
-   
-   
-  </div>
-)
+//     render() {
+//         return (
+//             <>
+//                 <Comment.Group>
 
-export default ChatBox;
+//                     <Header as='h3' dividing>
+//                         {this.state.messages.map(message) => (
+//                             <Comment message = {message.message}
+//                             />
+//                         )}
+//                     </Header>
+//                     <Form onSubmit={this.handleChatSubmit}>
+//                         <Form.TextArea />
+//                         <Button content='Add Reply' labelPosition='left' icon='edit' primary />
+//                     </Form>
+//                 </Comment.Group>
+
+//             </>
+//         )
+
+//     }
+
+
+// }
+
+// export default ChatBox;
