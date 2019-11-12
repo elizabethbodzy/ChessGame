@@ -44,8 +44,7 @@ The challenges our team faced within this project were:
 ## Demo
 
 Sign up or create an account to demo our fun and challenging chess game!
-<!-- (//link to heroku or deployed project ) -->
-<!-- //Recording of us playing game -->
+[Heroku](https://checkmate-project.herokuapp.com/) 
 
 <!-- CONTACT -->
 ## Contact
