@@ -13,7 +13,7 @@ class SignUpForm extends Component {
             email: '',
             password: '',
             createdUser: false,
-            logginIn: false,
+            loggedIn: false,
             error: null
         }
     };
@@ -44,7 +44,7 @@ class SignUpForm extends Component {
             .then(res => {
                 this.setState({
                     user: res.data.user,
-                    logginIn: true,
+                    loggedIn: true,
                 })
             })
             .then(res => {
