@@ -4,10 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import Navbar from './components/Navbar/Navbar';
 import GameContainer from './components/GameContainer/GameContainer'
 import SignUpForm from './components/SignUpForm/SignUpForm';
+import Chat from './components/Chat/Chat';
 // import './App.css';
 
-// import Join from './components/Join/Join';
-// import Chat from './components/Chat/Chat';
 
 function App() {
   return (
@@ -16,6 +15,10 @@ function App() {
             <Route exact path='/' component={SignUpForm} />
             {/* <Route exact path='/profile' component={Profile} /> */}
             <Route exact path='/home' component={GameContainer} />
+            
+            <Route exact path='/chat' component={Chat} />
+
+
           </Switch>
       </Router>
   );
