@@ -8,6 +8,17 @@ class King extends Piece {
             2: [4, 0]
         }
         this.label = 'king'
+
+        this.validMove = function (start = [], end = []) {
+            const x = end[0] - start[0]
+            const y = end[1] - start[1]
+
+            return (
+                (Math.abs(x) === 1 && y === 0) ||
+                (Math.abs(y) === 1 && x === 0) ||
+                (Math.abs(x) === 1 && Math.abs(y) === 1)
+            )
+        }
     }
 }
 
