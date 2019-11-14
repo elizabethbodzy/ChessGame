@@ -6,7 +6,7 @@ import './Chat.css';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
-import TextContainer from '../TextContainer/TextContainer';
+// import TextContainer from '../TextContainer/TextContainer';
 
 let socket;
 
@@ -18,7 +18,7 @@ const Chat = ({location }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
 
-    const ENDPOINT = 'localhost:5000'
+    const ENDPOINT = '/chat'
 
     useEffect(() => {
         const {name, room} = queryString.parse(location.search);
@@ -29,6 +29,7 @@ const Chat = ({location }) => {
         setRoom(room);     
         
     socket.emit('join', { name, room }, (error) => {
+        console.log({name, room})
         if(error) {
             alert(error);
         }    
@@ -71,7 +72,7 @@ const Chat = ({location }) => {
                 <Messages messages={messages} name ={name}/>
                 <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
             </div>
-            <TextContainer users={users} />
+            {/* <TextContainer users={users} /> */}
 
         </div>
     )
