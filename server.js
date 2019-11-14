@@ -4,9 +4,13 @@ const mongoose = require('mongoose');
 const path = require('path');
 const passport = require('passport');
 const routes = require('./routes');
-const http = require('http');
+// const http = require('http');
 const cors = require('cors');
-const socketio = require('socket.io');
+// const socketio = require('socket.io');
+
+const app = require('express')();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 const { addUser, removeUser, getUser, getUsersInRoom} = require('./users.js');
 
@@ -15,12 +19,12 @@ const { addUser, removeUser, getUser, getUsersInRoom} = require('./users.js');
 const PORT = process.env.PORT || 3001;
 // const router = require('./router');
 // hello
-const app = express();
+// const app = express();
 
 
 
 // app.use(router);
-const server = http.createServer(app);
+// const server = require('http').Server(app);
 
 
 
@@ -35,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(cors());
 
-const io = socketio(server);
+// const io = socketio(server);
 
 // PASSPORT CONFIG
 require("./config/passport")(passport)
@@ -51,10 +55,17 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/chess_game', { 
     console.log('connected to mongo database');
 });
 
+// START THE SERVER
+// db.sequelize.sync(syncOptions).then(function () {
+    server.listen(PORT, () => {
+        console.log(`==> 🌎  API Server now listening on PORT ${PORT}! `,
+    
+        );
+    });
 
 
 io.on("connection", (socket) => {
-    // console.log('We have a new connection!!');
+    console.log('We have a new connection!!');
     socket.on('join', ({name, room}, callback) => {
         // console.log(name, room);
 
@@ -95,13 +106,7 @@ io.on("connection", (socket) => {
 });
 
 
-// START THE SERVER
-// db.sequelize.sync(syncOptions).then(function () {
-app.listen(PORT, () => {
-    console.log(`==> 🌎  API Server now listening on PORT ${PORT}! `,
 
-    );
-});
 
 
 

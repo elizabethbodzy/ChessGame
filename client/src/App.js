@@ -19,7 +19,10 @@ function App() {
               <GameContainer />
             </Route>
             
-            <Route path='/chat' component={Chat} />
+            <Route path='/chat' >
+              <Navbar />
+              <GameContainer/>
+            </Route>
 
 
           </Switch>
