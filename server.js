@@ -19,8 +19,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 // app.use(router);
-app.use(cors());
-
+// const server = require('http').Server(app);
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
@@ -31,9 +30,12 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }
 
+app.use(cors());
+
+// const io = socketio(server);
+
 // PASSPORT CONFIG
 require("./config/passport")(passport)
-
 
 // SENDING EVERY OTHER REQUEST TO THE REACT APP AND DEFINE ANY API ROUTES BEFORE THIS RUNS
 app.get("*", (req, res) => {
@@ -45,10 +47,17 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/chess_game', { 
     console.log('connected to mongo database');
 });
 
+// START THE SERVER
+// db.sequelize.sync(syncOptions).then(function () {
+    server.listen(PORT, () => {
+        console.log(`==> 🌎  API Server now listening on PORT ${PORT}! `,
+    
+        );
+    });
 
 
 io.on("connection", (socket) => {
-    // console.log('We have a new connection!!');
+    console.log('We have a new connection!!');
     socket.on('join', ({name, room}, callback) => {
         // console.log(name, room);
 
@@ -89,13 +98,7 @@ io.on("connection", (socket) => {
 });
 
 
-// START THE SERVER
-// db.sequelize.sync(syncOptions).then(function () {
-app.listen(PORT, () => {
-    console.log(`==> 🌎  API Server now listening on PORT ${PORT}! `,
 
-    );
-});
 
 
 
