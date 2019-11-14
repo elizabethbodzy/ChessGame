@@ -16,11 +16,12 @@ const PORT = process.env.PORT || 3001;
 // const router = require('./router');
 // hello
 const app = express();
-const server = http.createServer(app);
-const io = socketio(server);
+
+
 
 // app.use(router);
-app.use(cors());
+const server = http.createServer(app);
+
 
 
 // MIDDLEWARE
@@ -31,6 +32,10 @@ app.use(routes);
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }
+
+app.use(cors());
+
+const io = socketio(server);
 
 // PASSPORT CONFIG
 require("./config/passport")(passport)

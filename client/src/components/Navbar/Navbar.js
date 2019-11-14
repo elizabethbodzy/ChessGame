@@ -25,12 +25,10 @@ class Navbar extends Component {
 
         return (
             <Menu inverted>
-                <Menu.Item>
-                    <Image src="./images/header-logo.jpg" />
-                </Menu.Item>
+ 
 
                 <Menu.Item
-                    name="home"
+                    name="home " 
                     active={activeItem === "home"}
                     onClick={this.handleItemClick}
                 />

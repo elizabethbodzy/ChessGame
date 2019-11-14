@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+#root {
+    height: inherit;
+    margin-top: 100px;
+}
+
+
 body {
     font-family: 'Montserrat', sans-serif;
     background: #f6f5f7;
@@ -11,7 +17,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     margin: -20px 0 50px;
 }
 
