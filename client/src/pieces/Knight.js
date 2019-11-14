@@ -8,6 +8,7 @@ class Knight extends Piece {
             2: [[1, 0], [6, 0]]
         }
         this.label = 'knight'
+        this.color = this.player === 1 ? 'white' : 'black'
 
         this.validMove = function (start = [], end = []) {
             const x = end[0] - start[0]

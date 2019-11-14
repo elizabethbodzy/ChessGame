@@ -8,6 +8,7 @@ class Queen extends Piece {
             2: [[3, 0]]
         }
         this.label = 'queen'
+        this.color = this.player === 1 ? 'white' : 'black'
 
         this.validMove = function (start = [], end = []) {
             const x = end[0] - start[0]

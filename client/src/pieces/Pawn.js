@@ -8,6 +8,8 @@ class Pawn extends Piece {
             2: [[0, 6], [1, 6], [2, 6], [3, 6], [4, 6], [5, 6], [6, 6], [7, 6]]
         }
         this.label = 'pawn'
+
+        this.color = this.player === 1 ? 'white' : 'black'
         //define movement pattern for pawns -1 means go down 1 means go up
         this.orientation = orientation
 

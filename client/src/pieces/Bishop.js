@@ -7,7 +7,9 @@ class Bishop extends Piece {
             1: [[2, 7], [5, 7]],
             2: [[2, 0], [5, 0]]
         }
+        
         this.label = 'bishop'
+        this.color = this.player === 1 ? 'white' : 'black'
 
         this.validMove = function (start = [], end = []) {
             const x = end[0] - start[0]
