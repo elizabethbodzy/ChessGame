@@ -18,6 +18,10 @@ class SignUpForm extends Component {
         }
     };
 
+    componentDidMount() {
+        document.body.style.height = '100vh';
+    };
+
     handleInputChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };

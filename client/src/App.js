@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import Navbar from './components/Navbar/Navbar';
 import GameContainer from './components/GameContainer/GameContainer'
 import SignUpForm from './components/SignUpForm/SignUpForm';
+import Profile from './components/ProfilePage/Profile';
 // import './App.css';
 
 // import Join from './components/Join/Join';
@@ -14,6 +15,7 @@ function App() {
     <Router>
           <Switch>
             <Route exact path='/' component={SignUpForm} />
+            <Route exact path='/profile' component={Profile} />
             {/* <Route exact path='/profile' component={Profile} /> */}
             <Route exact path='/home' component={GameContainer} />
           </Switch>

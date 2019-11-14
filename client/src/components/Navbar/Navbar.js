@@ -1,27 +1,33 @@
 import React, { Component } from "react";
 import { Menu, Image } from "semantic-ui-react";
+import axios from 'axios';
 
 class Navbar extends Component {
-    state = { activeItem: "home" };
+    constructor(props) {
+        super(props);
+        this.state = { 
+            activeItem: "home" 
+        };
+    };
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
+    handleLogOut = () => {
+        axios
+            .get("/auth/logout")
+            .then(res => {
+                localStorage.removeItem("jwtToken");
+                this.setState({
+                    user: {},
+                    logginIn: false
+                });
+                window.location.reload();
+            })
+            .catch(err => console.log(err));
+    };
+
     render() {
         const { activeItem } = this.state;
-
-        handleLogOut = () => {
-            axios
-                .get("/auth/logout")
-                .then(res => {
-                    localStorage.removeItem("jwtToken");
-                    this.setState({
-                        user: {},
-                        logginIn: false
-                    });
-                    window.location.reload();
-                })
-                .catch(err => console.log(err));
-        };
 
         return (
             <Menu inverted>
