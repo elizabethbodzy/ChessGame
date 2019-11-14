@@ -4,9 +4,6 @@ html, body {
     margin: 0;
   }
   
-  /* #root {
-    
-  } */
   
   * {
     box-sizing: border-box;
@@ -20,7 +17,7 @@ html, body {
     height: 80%;
     /* height: 100vh; */
     align-items: center;
-    background-color: #1A1A1D;
+    /* background-color: #1A1A1D; */
     margin-top: 50px;
   }
   
@@ -35,8 +32,8 @@ html, body {
   }
   
   .heading {
-    color: white;
-    font-size: 2.5em;
+    color: #2979FF;
+    font-size: 1.3em;
     padding-bottom: 10px;
     border-bottom: 2px solid white;
   }

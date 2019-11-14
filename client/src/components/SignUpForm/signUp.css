@@ -4,10 +4,7 @@
     box-sizing: border-box;
 }
 
-#root {
-    height: inherit;
-    margin-top: 100px;
-}
+
 
 
 body {
@@ -17,7 +14,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    
     margin: -20px 0 50px;
 }
 

@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #1A1A1D;
+    height: 100%;
+    /* background-color: #1A1A1D; */
   }
   
   .container {

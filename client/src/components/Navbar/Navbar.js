@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 import { Menu, Image } from "semantic-ui-react";
 
+
+
+
 class Navbar extends Component {
+    
     state = { activeItem: "home" };
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
+    componentDidMount () {
+        document.body.style.height = "inherit"
+        document.body.style.marginTop = "100px"
+
+    }
 
     render() {
         const { activeItem } = this.state;
@@ -22,6 +32,8 @@ class Navbar extends Component {
         //         })
         //         .catch(err => console.log(err));
         // };
+
+        
 
         return (
             <Menu inverted>
