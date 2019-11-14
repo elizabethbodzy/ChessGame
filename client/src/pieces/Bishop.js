@@ -7,16 +7,32 @@ class Bishop extends Piece {
             1: [[2, 7], [5, 7]],
             2: [[2, 0], [5, 0]]
         }
-        
+
         this.label = 'bishop'
         this.color = this.player === 1 ? 'white' : 'black'
 
-        this.validMove = function (start = [], end = []) {
-            const x = end[0] - start[0]
-            const y = end[1] - start[1]
+        this.generateMove = (start = [], board = []) => {
+            const allMoves = [];
+            const x = start[0];
+            const y = start[1];
+
+            for (let i = x + 1; i < 8; i++) {
+                for (let j = y + 1; j < 8; j++) {
+                    allMoves.push([i,j])
+                }
+            }
+
+            console.log(allMoves)
+
+            return allMoves
+        }
+
+        this.validMove = function (start = [], end = [], board = []) {
+            const allMoves = this.generateMove(start, board);
+            console.log(allMoves)
 
             return (
-                ((Math.abs(x) > 0 && Math.abs(x) <= 7) && (x === y || x === -y))
+                true
             )
         }
     }
