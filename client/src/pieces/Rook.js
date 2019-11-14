@@ -8,15 +8,70 @@ class Rook extends Piece {
             2: [[0, 0], [7, 0]]
         }
         this.label = 'rook'
+        this.color = this.player === 1 ? 'white' : 'black'
 
-        this.validMove = function (start = [], end = []) {
-            const x = end[0] - start[0]
-            const y = end[1] - start[1]
+        this.generateMoves = (start = [], board = []) => {
+            const startX = start[0];
+            const startY = start[1];
+            const allMovesPossible = [];
 
-            return (
-                ((Math.abs(x) > 0 && Math.abs(x) <= 7) && y === 0) ||
-                ((Math.abs(y) > 0 && Math.abs(y) <= 7) && x === 0)
-            )
+            for (let i = startX + 1; i < 8; i++) {
+                const piece = board[startY][i]
+
+                if (piece === null) {
+                    allMovesPossible.push([i, startY])
+                } else if (piece.color !== this.color) {
+                    allMovesPossible.push([i, startY]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            for (let i = startX - 1; i >= 0; i--) {
+                const piece = board[startY][i]
+                if (piece === null) {
+                    allMovesPossible.push([i, startY])
+                } else if (piece.color !== this.color) {
+                    allMovesPossible.push([i, startY]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            for (let i = startY + 1; i < 8; i++) {
+                const piece = board[i][startX]
+                if (piece === null) {
+                    allMovesPossible.push([startX, i])
+                } else if (piece.color !== this.color) {
+                    allMovesPossible.push([startX, i]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            for (let i = startY - 1; i >= 0; i--) {
+                const piece = board[i][startX]
+                if (piece === null) {
+                    allMovesPossible.push([startX, i])
+                } else if (piece.color !== this.color) {
+                    allMovesPossible.push([startX, i]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            return allMovesPossible
+        }
+
+        this.validMove = function (start = [], end = [], board = []) {
+            const allMovesPossible = this.generateMoves(start, board);
+            let valid = false
+            allMovesPossible.forEach(coordinate =>{
+                if(coordinate.toString() === end.toString()){
+                    valid = true;
+                }
+            })
+            return valid;
         }
     }
 }
