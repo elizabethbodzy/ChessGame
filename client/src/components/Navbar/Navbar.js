@@ -37,7 +37,9 @@ class Navbar extends Component {
 
         return (
             <Menu inverted>
- 
+               <Menu.Item>
+                    <Image src="./images/header-logo.jpg" style={{width:50}}/>
+                </Menu.Item>
 
                 <Menu.Item
                     name="home " 
