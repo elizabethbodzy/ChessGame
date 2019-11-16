@@ -10,15 +10,87 @@ class King extends Piece {
         this.label = 'king'
         this.color = this.player === 1 ? 'white' : 'black'
 
-        this.validMove = function (start = [], end = []) {
-            const x = end[0] - start[0]
-            const y = end[1] - start[1]
+        this.generateMoves = (start = [], board = []) => {
+            const allMoves = [];
+            const x = start[0]
+            const y = start[1]
 
-            return (
-                (Math.abs(x) === 1 && y === 0) ||
-                (Math.abs(y) === 1 && x === 0) ||
-                (Math.abs(x) === 1 && Math.abs(y) === 1)
-            )
+            if (y + 1 <= 7) {
+                if (!board[y + 1][x]) {
+                    allMoves.push([x, y + 1])
+                } else if (board[y + 1][x].color !== this.color) {
+                    allMoves.push([x, y + 1])
+                }
+            }
+
+            if (y - 1 >= 0) {
+                if (!board[y - 1][x]) {
+                    allMoves.push([x, y - 1])
+                } else if (board[y - 1][x].color !== this.color) {
+                    allMoves.push([x, y - 1])
+                }
+            }
+
+            if (x - 1 >= 0) {
+                if (!board[y][x - 1]) {
+                    allMoves.push([x - 1, y])
+                } else if (board[y][x - 1].color !== this.color) {
+                    allMoves.push([x - 1, y])
+                }
+            }
+
+            if (x + 1 <= 7) {
+                if (!board[y][x + 1]) {
+                    allMoves.push([x + 1, y])
+                } else if (board[y][x + 1].color !== this.color) {
+                    allMoves.push([x + 1, y])
+                }
+            }
+
+            if (x + 1 <= 7 && y + 1 <= 7) {
+                if (!board[y + 1][x + 1]) {
+                    allMoves.push([x + 1, y + 1])
+                } else if (board[y + 1][x + 1].color !== this.color) {
+                    allMoves.push([x + 1, y + 1])
+                }
+            }
+
+            if (x + 1 <= 7 && y - 1 >= 0) {
+                if (!board[y - 1][x + 1]) {
+                    allMoves.push([x + 1, y - 1])
+                } else if (board[y - 1][x + 1].color !== this.color) {
+                    allMoves.push([x + 1, y - 1])
+                }
+            }
+
+            if (x - 1 >= 0 && y + 1 <= 7) {
+                if (!board[y + 1][x - 1]) {
+                    allMoves.push([x - 1, y + 1])
+                } else if (board[y + 1][x - 1].color !== this.color) {
+                    allMoves.push([x - 1, y + 1])
+                }
+            }
+            if (x - 1 >= 0 && y - 1 >= 0) {
+                if (!board[y - 1][x - 1]) {
+                    allMoves.push([x - 1, y - 1])
+                } else if (board[y - 1][x - 1].color !== this.color) {
+                    allMoves.push([x - 1, y - 1])
+                }
+            }
+
+            console.log(allMoves)
+            return allMoves
+        }
+
+        this.validMove = function (start = [], end = [], board = []) {
+            const allMoves = this.generateMoves(start, board);
+            let valid = false
+            allMoves.forEach(coordinate => {
+                if (coordinate.toString() === end.toString()) {
+                    valid = true;
+                }
+            })
+            return valid
         }
     }
 }
