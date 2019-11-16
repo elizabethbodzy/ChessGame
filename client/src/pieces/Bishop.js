@@ -15,69 +15,92 @@ class Bishop extends Piece {
             const allMoves = [];
             const x = start[0];
             const y = start[1];
-            Loop1: for (let i = x + 1; i < 8; i++) {
 
-                Loop2: for (let j = y + 1; j < 8; j++) {
+            Loop1: for (let i = x + 1; i < 8; i++) {
+                for (let j = y + 1; j < 8; j++) {
                     let dx = i - x;
                     let dy = j - y;
-                    const piece = board[j][i]
-                    if (piece === null) {
-                        if (dx / dy === 1) {
-                            allMoves.push([i, j]);
-                        }
-                    } else if (piece.color === this.color) {
-                        break Loop1;
-                    } else if (piece.color !== this.color) {
-                        if (dx / dy === 1) {
-                            allMoves.push([i, j]);
+                    let piece = board[j][i]
+                    if (!piece && dx / dy === 1) {
+                        allMoves.push([i, j])
+                    } else if (piece) {
+                        if (piece.color !== this.color && dx / dy === 1) {
+                            allMoves.push([i, j])
                             break Loop1;
                         }
+                        break Loop1
                     }
                 }
             }
 
-            // for (let i = x - 1; i >= 0; i--) {
+            // Loop2: for (let i = x - 1; i >= 0; i--) {
             //     for (let j = y - 1; j >= 0; j--) {
             //         let dx = i - x;
             //         let dy = j - y;
-            //         if (dx / dy === 1) {
-            //             allMoves.push([i, j])
+            //         const piece = board[j][i]
+            //         if (!piece && dx / dy === 1) {
+            //             allMoves.push([i, j]);
+            //         } else if (piece) {
+            //             if (piece.color !== this.color && dy / dy === 1) {
+            //                 allMoves.push([i, j])
+            //             }
+            //             break Loop2;
             //         }
             //     }
             // }
 
-            // for (let i = x + 1; i < 8; i++) {
+            // Loop3: for (let i = x + 1; i < 8; i++) {
             //     for (let j = y - 1; j >= 0; j--) {
             //         let dx = i - x;
             //         let dy = j - y;
-            //         if (dx / dy === -1) {
-            //             allMoves.push([i, j])
+            //         const piece = board[j][i]
+            //         if (piece === null) {
+            //             if (dx / dy === -1) {
+            //                 allMoves.push([i, j])
+            //             }
+            //         } else if (piece.color === this.color) {
+            //             break Loop3;
+            //         } else if (piece.color !== this.color) {
+            //             if (dx / dy === -1) {
+            //                 allMoves.push([i, j])
+            //                 break Loop3
+            //             }
             //         }
             //     }
             // }
 
-            // for (let i = x - 1; i >= 0; i--) {
+            // Loop4: for (let i = x - 1; i >= 0; i--) {
             //     for (let j = y + 1; j < 8; j++) {
             //         let dx = i - x;
             //         let dy = j - y;
-            //         if (dx / dy === -1) {
-            //             allMoves.push([i, j])
+            //         const piece = board[j][i]
+            //         if (piece === null) {
+            //             if (dx / dy === -1) {
+            //                 allMoves.push([i, j])
+            //             }
+            //         } else if (piece.color === this.color) {
+            //             break Loop4;
+            //         } else if (piece.color !== this.color) {
+            //             if (dx / dy === -1) {
+            //                 allMoves.push([i, j])
+            //                 break Loop4
+            //             }
             //         }
             //     }
             // }
-
             console.log(allMoves)
-
             return allMoves
         }
 
         this.validMove = function (start = [], end = [], board = []) {
             const allMoves = this.generateMove(start, board);
-            console.log(allMoves)
-
-            return (
-                true
-            )
+            let valid = false
+            allMoves.forEach(coordinate => {
+                if (coordinate.toString() === end.toString()) {
+                    valid = true;
+                }
+            })
+            return true;
         }
     }
 }
