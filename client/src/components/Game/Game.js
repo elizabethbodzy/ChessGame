@@ -55,11 +55,9 @@ class Game extends React.Component {
         const board = this.state.board
         const piece = board[startY][startX] || null
 
-        // console.log(this.state.coordinates)
-        //check piece logic
         if (piece === null) {
             console.log('no piece')
-        } else if (piece.validMove(this.state.coordinates, [x, y])) {
+        } else if (piece.validMove(this.state.coordinates, [x, y], this.state.board)) {
             this.movePiece(this.state.coordinates, [x, y])
             if (piece.label === 'pawn') {
                 piece.hasMoved = true
