@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-
-import Chat from "../Chat/Chat";
+import { useChatState } from '../GameContainer/GameContainer'
+// import Chat from "../Chat/Chat";
 
 import "./Join.css";
 
 const Join = () => {
   const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState(0);
+
+  const [state, dispatch] = useChatState()
+
+  useEffect(() => {
+    console.log(state)
+  }, [])
+
+
+  const handleJoin = event => {
+    return (!name || !room) ? event.preventDefault() : null;
+  }
+
 
   return (
     <div className="joinOuterContainer">
@@ -31,6 +43,7 @@ const Join = () => {
         </div>
         <Link
           to={`/chat?name=${name}&room=${room}`}
+          onClick={handleJoin}
         >
           <button className="button mt-20" type="submit">
             Sign In
