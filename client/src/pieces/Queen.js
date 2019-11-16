@@ -10,15 +10,132 @@ class Queen extends Piece {
         this.label = 'queen'
         this.color = this.player === 1 ? 'white' : 'black'
 
-        this.validMove = function (start = [], end = []) {
-            const x = end[0] - start[0]
-            const y = end[1] - start[1]
+        this.generateMoves = (start = [], board = []) => {
+            const allMoves = [];
+            const x = start[0];
+            const y = start[1];
 
-            return (
-                ((Math.abs(x) > 0 && Math.abs(x) <= 7) && y === 0) ||
-                ((Math.abs(y) > 0 && Math.abs(y) <= 7) && x === 0) ||
-                ((Math.abs(x) > 0 && Math.abs(x) <= 7) && (x === y || x === -y))
-            )
+            Loop1: for (let i = x + 1; i < 8; i++) {
+                for (let j = y + 1; j < 8; j++) {
+                    let dx = i - x;
+                    let dy = j - y;
+                    let piece = board[j][i]
+                    if (!piece && dx / dy === 1) {
+                        allMoves.push([i, j])
+                    } else if (piece && dx / dy === 1) {
+                        if (piece.color !== this.color) {
+                            allMoves.push([i, j])
+                        }
+                        break Loop1
+                    }
+                }
+            }
+
+            Loop2: for (let i = x - 1; i >= 0; i--) {
+                for (let j = y - 1; j >= 0; j--) {
+                    let dx = x - i;
+                    let dy = y - j;
+                    const piece = board[j][i]
+                    if (!piece && dx / dy === 1) {
+                        allMoves.push([i, j]);
+                    } else if (piece && dx / dy === 1) {
+                        if (piece.color !== this.color) {
+                            allMoves.push([i, j])
+                        }
+                        break Loop2;
+                    }
+                }
+            }
+
+            Loop3: for (let i = x + 1; i < 8; i++) {
+                for (let j = y - 1; j >= 0; j--) {
+                    let dx = i - x;
+                    let dy = j - y;
+                    const piece = board[j][i]
+                    if (!piece && dx / dy === -1) {
+                        allMoves.push([i, j])
+                    } else if (piece && dx / dy === -1) {
+                        if (piece.color !== this.color) {
+                            allMoves.push([i, j])
+                        }
+                        break Loop3;
+                    }
+                }
+            }
+
+            Loop4: for (let i = x - 1; i >= 0; i--) {
+                for (let j = y + 1; j < 8; j++) {
+                    let dx = i - x;
+                    let dy = j - y;
+                    const piece = board[j][i]
+                    if (!piece && dx / dy === -1) {
+                        allMoves.push([i, j])
+                    } else if (piece && dx / dy === -1) {
+                        if (piece.color !== this.color) {
+                            allMoves.push([i, j])
+                        }
+                        break Loop4;
+                    }
+                }
+            }
+            for (let i = x + 1; i < 8; i++) {
+                const piece = board[y][i]
+
+                if (piece === null) {
+                    allMoves.push([i, y])
+                } else if (piece.color !== this.color) {
+                    allMoves.push([i, y]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            for (let i = x - 1; i >= 0; i--) {
+                const piece = board[y][i]
+                if (piece === null) {
+                    allMoves.push([i, y])
+                } else if (piece.color !== this.color) {
+                    allMoves.push([i, y]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            for (let i = y + 1; i < 8; i++) {
+                const piece = board[i][x]
+                if (piece === null) {
+                    allMoves.push([x, i])
+                } else if (piece.color !== this.color) {
+                    allMoves.push([x, i]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            for (let i = y - 1; i >= 0; i--) {
+                const piece = board[i][x]
+                if (piece === null) {
+                    allMoves.push([x, i])
+                } else if (piece.color !== this.color) {
+                    allMoves.push([x, i]);
+                    break;
+                } else if (piece.color === this.color) {
+                    break;
+                }
+            }
+            console.log(allMoves)
+            return allMoves
+        }
+
+        this.validMove = function (start = [], end = [], board = []) {
+            const allMoves = this.generateMoves(start, board);
+            let valid = false
+            allMoves.forEach(coordinate => {
+                if (coordinate.toString() === end.toString()) {
+                    valid = true;
+                }
+            })
+            return valid
         }
     }
 }
