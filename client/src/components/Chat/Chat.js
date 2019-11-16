@@ -19,13 +19,13 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const [state, dispatch] = useChatState()
+  // const [state, dispatch] = useChatState()
 
   const ENDPOINT = "localhost:3001";
 
-  useEffect(() => {
-      console.log(state)
-  }, [])
+  // useEffect(() => {
+  //     console.log(state)
+  // }, [])
 
 //   useEffect(() => {
       
@@ -59,7 +59,7 @@ const Chat = ({ location }) => {
     });
 
     socket.on("roomData", ({ users }) => {
-        dispatch({ type: "SET_USERS", users })
+        // dispatch({ type: "SET_USERS", users })
     
       setUsers(users);
     

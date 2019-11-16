@@ -5,21 +5,23 @@ import { useChatState } from '../GameContainer/GameContainer'
 
 import "./Join.css";
 
-const Join = () => {
+const Join = ({toggleChat}) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState(0);
 
   //hello
 
-  const [state, dispatch] = useChatState()
+  // const [state, dispatch] = useChatState()
 
-  useEffect(() => {
-    console.log(state)
-  }, [])
+  // useEffect(() => {
+  //   console.log(state)
+  // }, [])
 
 
   const handleJoin = event => {
+    toggleChat();
     return (!name || !room) ? event.preventDefault() : null;
+  
   }
 
 
@@ -44,11 +46,12 @@ const Join = () => {
           />
         </div>
         <Link
-          to={`/chat?name=${name}&room=${room}`}
+          to={`/game?name=${name}&room=${room}`}
           onClick={handleJoin}
         >
-          <button className="button mt-20" type="submit">
-            Sign In
+          
+          <button className="button mt-20" type="button">
+            Join Game
           </button>
         </Link>
       </div>
