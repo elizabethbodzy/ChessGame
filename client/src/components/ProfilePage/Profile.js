@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
 import Navbar from '../Navbar/Navbar';
 import { Segment, Button, Divider, Grid } from 'semantic-ui-react';
 import './profile.css';
+import Join from '../Join/Join';
+import Chat from '../Chat/Chat';
 
 class Profile extends Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         userName: this.state.userName,
-    //         totalGames: this.state.totalGames,
-    //         points: this.state.points,
-    //         wins: this.state.wins,
-    //         losses: this.state.losses,
-    //         draws: this.state.draws
-    //     }
-    // };
+    constructor(props) {
+        super(props);
+        this.state = {
+            toggleChat: false
+            // userName: this.state.userName,
+            // totalGames: this.state.totalGames,
+            // points: this.state.points,
+            // wins: this.state.wins,
+            // losses: this.state.losses,
+            // draws: this.state.draws
+        }
+    };
 
     componentDidMount() {
         document.body.style.margin = '0';
         document.body.style.padding = '0';
         document.body.style.boxSizing = 'border-box';
+    }
+
+    toggleChat = () => {
+        this.setState({toggleChat : true})
     }
 
     render() {
@@ -67,9 +75,14 @@ class Profile extends Component {
                     <Grid.Row width={16} className='join-lobby-container'>
                         <Grid.Column>
                             <Segment className='join'>
-                                <h1>Join Game</h1>
+                                {
+                                    this.state.toggleChat ? <Chat location={this.props.location}/> : <Join toggleChat={this.toggleChat} />
+                                }
+                            
+                                
                                 <hr />
                             </Segment>
+                            
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
@@ -79,4 +92,4 @@ class Profile extends Component {
 
 };
 
-export default Profile;
+export default  withRouter(Profile);

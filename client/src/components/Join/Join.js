@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useChatState } from '../GameContainer/GameContainer'
+import { useChatState } from '../../App'
 // import Chat from "../Chat/Chat";
 
 import "./Join.css";
 
-const Join = () => {
+const Join = ({toggleChat}) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState(0);
 
@@ -19,7 +19,9 @@ const Join = () => {
 
 
   const handleJoin = event => {
+    toggleChat();
     return (!name || !room) ? event.preventDefault() : null;
+  
   }
 
 
@@ -44,11 +46,12 @@ const Join = () => {
           />
         </div>
         <Link
-          to={`/chat?name=${name}&room=${room}`}
+          to={`/game?name=${name}&room=${room}`}
           onClick={handleJoin}
         >
-          <button className="button mt-20" type="submit">
-            Sign In
+          
+          <button className="button mt-20" type="button">
+            Join Game
           </button>
         </Link>
       </div>

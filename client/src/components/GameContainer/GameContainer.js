@@ -7,26 +7,26 @@ import Navbar from "../Navbar/Navbar";
 
 import Join from "../Join/Join";
 
-export const ChatContext = createContext()
+// export const ChatContext = createContext()
 
-export const useChatState = () => {
-  return useContext(ChatContext)
-}
+// export const useChatState = () => {
+//   return useContext(ChatContext)
+// }
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "SET_USERS":
-      console.log('dispatched: ', action.users)
-      return { ...state, users: action.users, yo: 'yoo' }
-    default:
-      return state;
-  }
-}
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case "SET_USERS":
+//       console.log('dispatched: ', action.users)
+//       return { ...state, users: action.users, yo: 'yoo' }
+//     default:
+//       return state;
+//   }
+// }
 
-const ChatContextProvider = ({ reducer, initialState = {}, children }) => {
-  const value = useReducer(reducer, initialState);
-  return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>
-}
+// const ChatContextProvider = ({ reducer, initialState = {}, children }) => {
+//   const value = useReducer(reducer, initialState);
+//   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>
+// }
 
 
 const GameContainer = ({ location }) => {
@@ -39,13 +39,8 @@ const GameContainer = ({ location }) => {
 
         <Grid.Row>
           <Grid.Column width={4}>
+          <Chat location={location}/>
 
-            <ChatContextProvider reducer={reducer}>
-              {location.pathname === "/chat" ? <Chat location={location} /> : <Join />}
-            </ChatContextProvider>
-
-
-            {location.pathname === "/chat" ? <Chat location={location} /> : <Join />}
 
 
           </Grid.Column>
