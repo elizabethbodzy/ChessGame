@@ -78,7 +78,11 @@ class SignUpForm extends Component {
                     window.location.href = '/profile';
                 }
                 if (res.data.error) {
-                    this.setState({ error: res.data.error });
+                    this.setState({ 
+                        error: res.data.error,
+                        email: '',
+                        password: ''
+                     });
                     alert('Incorrect email or password');
                 }
             })

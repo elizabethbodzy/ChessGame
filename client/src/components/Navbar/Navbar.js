@@ -3,9 +3,18 @@ import { Menu, Image } from "semantic-ui-react";
 
 class Navbar extends Component {
     
-    state = { activeItem: "home" };
+    state = { 
+        activeItem: "home",
+        navigate: false
+     };
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
+    handleLogOut = () => {
+        localStorage.clear('jwtToken');
+        this.setState({ navigate: true });
+        window.location.href = '/';
+    };
 
     componentDidMount () {
         document.body.style.height = "inherit";
