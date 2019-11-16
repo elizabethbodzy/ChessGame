@@ -59,6 +59,7 @@ const Chat = ({ location }) => {
     });
 
     socket.on("roomData", ({ users }) => {
+      console.log(users)
         // dispatch({ type: "SET_USERS", users })
     
       setUsers(users);

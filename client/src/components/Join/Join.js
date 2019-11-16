@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { useChatState } from '../GameContainer/GameContainer'
+import { useChatState } from '../../App'
 // import Chat from "../Chat/Chat";
 
 import "./Join.css";
@@ -11,11 +11,11 @@ const Join = ({toggleChat}) => {
 
   //hello
 
-  // const [state, dispatch] = useChatState()
+  const [state, dispatch] = useChatState()
 
-  // useEffect(() => {
-  //   console.log(state)
-  // }, [])
+  useEffect(() => {
+    console.log(state)
+  }, [])
 
 
   const handleJoin = event => {

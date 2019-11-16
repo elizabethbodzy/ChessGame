@@ -28,8 +28,6 @@ class Profile extends Component {
 
     toggleChat = () => {
         this.setState({toggleChat : true})
-
-
     }
 
     render() {
