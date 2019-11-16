@@ -10,16 +10,15 @@ import Join from "../Join/Join";
 const GameContainer = ({ location }) => {
   return (
     <>
-    {/* <Navbar /> */}
+      <Navbar />
       <Grid celled>
-        
+
 
         <Grid.Row>
           <Grid.Column width={4}>
-           
+
             {location.pathname === "/chat" ? <Chat location={location} /> : <Join />}
 
-           
           </Grid.Column>
           <Grid.Column width={10}>
             <Game />
