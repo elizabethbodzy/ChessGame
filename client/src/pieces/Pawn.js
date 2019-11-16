@@ -15,14 +15,58 @@ class Pawn extends Piece {
 
         this.hasMoved = false
 
-        this.validMove = function (start = [], end = []) {
-            const x = end[0] - start[0]
+        this.generateMoves = (start = [], board = []) => {
+            const x = start[0];
+            const y = start[1];
+            const allMoves = [];
+            const moveY = this.orientation
+            console.log(moveY)
 
-            return (
-                ((start[1] - this.orientation) === end[1] && x === 0) ||
-                (((start[1] - 2 * this.orientation) === end[1] && x === 0) && !this.hasMoved) ||
-                ((start[1] - this.orientation) === end[1] && Math.abs(x) === 1)
-            )
+            if (moveY === -1) {
+                if (!board[y - moveY][x]) {
+                    allMoves.push([x, y - moveY])
+                    if (!this.hasMoved) {
+                        if (!board[y - moveY - moveY][x])
+                            allMoves.push([x, y - moveY - moveY])
+                    }
+                }
+                if (board[y - moveY][x + 1] && board[y - moveY][x + 1].color !== this.color) {
+                    allMoves.push([x + 1, y - moveY])
+                }
+                if (board[y - moveY][x - 1] && board[y - moveY][x - 1].color !== this.color) {
+                    allMoves.push([x - 1, y - moveY])
+                }
+            }
+
+            if (moveY === 1) {
+                if (!board[y - moveY][x]) {
+                    allMoves.push([x, y - moveY])
+                    if (!this.hasMoved) {
+                        if (!board[y - moveY - moveY][x])
+                            allMoves.push([x, y - moveY - moveY])
+                    }
+                }
+                if (board[y - moveY][x + 1] && board[y - moveY][x + 1].color !== this.color) {
+                    allMoves.push([x + 1, y - moveY])
+                }
+                if (board[y - moveY][x - 1] && board[y - moveY][x - 1].color !== this.color) {
+                    allMoves.push([x - 1, y - moveY])
+                }
+            }
+
+            console.log(allMoves)
+            return allMoves
+        }
+
+        this.validMove = function (start = [], end = [], board = []) {
+            const allMoves = this.generateMoves(start, board);
+            let valid = false
+            allMoves.forEach(coordinate => {
+                if (coordinate.toString() === end.toString()) {
+                    valid = true;
+                }
+            })
+            return valid
         }
     }
 }
