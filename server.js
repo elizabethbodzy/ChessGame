@@ -4,13 +4,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 const passport = require('passport');
 const routes = require('./routes');
-// const http = require('http');
+const http = require('http');
 const cors = require('cors');
-// const socketio = require('socket.io');
-
-const app = require('express')();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const socketio = require('socket.io');
 
 const { addUser, removeUser, getUser, getUsersInRoom, users } = require('./users.js');
 
@@ -18,15 +14,12 @@ const { addUser, removeUser, getUser, getUsersInRoom, users } = require('./users
 
 const PORT = process.env.PORT || 3001;
 // const router = require('./router');
-// hello
-// const app = express();
-
-
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 
 // app.use(router);
 // const server = require('http').Server(app);
-
-
 
 // MIDDLEWARE
 app.use(express.urlencoded({ extended: true }));
@@ -43,7 +36,6 @@ app.use(cors());
 
 // PASSPORT CONFIG
 require("./config/passport")(passport)
-
 
 // SENDING EVERY OTHER REQUEST TO THE REACT APP AND DEFINE ANY API ROUTES BEFORE THIS RUNS
 app.get("*", (req, res) => {

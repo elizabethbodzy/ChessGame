@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import API from '../../utils/API';
+import { email, password, minLength, required } from '../../utils/validators';
 import './signUp.css';
 
 class SignUpForm extends Component {
@@ -13,14 +14,20 @@ class SignUpForm extends Component {
             email: '',
             password: '',
             createdUser: false,
-            logginIn: false,
+            loggedIn: false,
             error: null
         }
     };
 
-    componentDidMount () {
-        document.body.style.height = "100vh"
-    }
+    componentDidMount() {
+        document.body.style.height = '100vh';
+        document.body.style.display = 'flex';
+        document.body.style.flexDirection = 'column';
+        document.body.style.justifyContent = 'center';
+        document.body.style.alignItems = 'center';
+        document.body.style.margin = '-20px 0 50px';
+    };
+
     handleInputChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
@@ -38,6 +45,7 @@ class SignUpForm extends Component {
                     email: '',
                     password: ''
                 })
+                window.location.href = '/profile';
             })
             .catch(err => console.log(err));
     };
@@ -47,7 +55,13 @@ class SignUpForm extends Component {
             .then(res => {
                 this.setState({
                     user: res.data.user,
-                    logginIn: true
+                    loggedIn: true,
+                })
+            })
+            .then(res => {
+                this.setState({
+                    email: '',
+                    password: ''
                 })
             })
             .catch(err => console.log(err));
@@ -61,9 +75,11 @@ class SignUpForm extends Component {
                 localStorage.setItem('jwtToken', res.data.token);
                 if (res.data.success) {
                     this.updateUser();
+                    window.location.href = '/profile';
                 }
                 if (res.data.error) {
                     this.setState({ error: res.data.error });
+                    alert('Incorrect email or password');
                 }
             })
             .catch(err => console.log(err));
@@ -95,6 +111,11 @@ class SignUpForm extends Component {
                     <div className='form-container sign-up-container'>
                         <form action='#'>
                             <h1>Create Account</h1>
+                            <div class="social-container">
+                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                            </div>
+                            <span>or create an account</span>
                             <input
                                 value={this.state.userName}
                                 name='userName'
@@ -102,12 +123,14 @@ class SignUpForm extends Component {
                                 type='text'
                                 placeholder='Username' />
                             <input
+                                validators={[required, email]}
                                 value={this.state.email}
                                 name='email'
                                 onChange={this.handleInputChange}
                                 type='email'
                                 placeholder='Email' />
                             <input
+                                validators={[required, password, minLength(6)]}
                                 value={this.state.password}
                                 name='password'
                                 onChange={this.handleInputChange}
@@ -120,6 +143,11 @@ class SignUpForm extends Component {
                     <div className='form-container sign-in-container'>
                         <form action='#'>
                             <h1>Sign In</h1>
+                            <div class="social-container">
+                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                            </div>
+                            <span>or sign in using your email</span>
                             <input
                                 value={this.state.email}
                                 name='email'

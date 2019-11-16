@@ -1,0 +1,82 @@
+/* PROFILE INFORMATION */
+.profile-container {
+    justify-content: space-between !important;
+    margin: 0 30px;
+}
+
+.info-container {
+    text-align: center;
+    height: 400px;
+}
+
+.info {
+    height: 100%;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    margin-bottom: 20px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.avatar-user-container {
+    display: flex;
+}
+
+/* PROFILE IMAGE */
+.avatar {
+    width: 125px;
+    height: 125px;
+    margin-right: 15px;
+    margin-left: 20px;
+
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+}
+
+/* STATS INFORMATION */
+.stats-container {
+    text-align: center;
+    height: 400px;
+}
+
+.stats {
+    height: 100%;
+}
+
+.stats hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.games-played,
+.points-earned,
+.record {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px 15px 20px;
+}
+
+.games-played span,
+.points-earned span,
+.record span {
+    font-size: 1.28571429rem;
+}
+
+/* JOIN MATCH CONTAINER */
+.join-lobby-container {
+    margin: 0 30px;
+    text-align: center;
+    height: 350px;
+}
+
+.join {
+    height: 100%;
+}
