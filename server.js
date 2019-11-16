@@ -55,7 +55,7 @@ server.listen(PORT, () => {
     );
 });
 
-let room;
+// let room;
 
 
 io.on("connection", socket => {
@@ -63,7 +63,7 @@ io.on("connection", socket => {
 
 
     socket.on('join', ({ name, room }, callback) => {
-        room = room;
+        // room = room;
         console.log('yep connected')
         // const chatRooms = {
         //     [room] : []
