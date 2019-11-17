@@ -28,17 +28,19 @@ class Game extends React.Component {
 
     movePiece = (start = [], end = []) => {
         const board = this.state.board;
-        const startPiece = board[start[1]][start[0]]
+        const piece = board[start[1]][start[0]]
         let capturedPiece
         if (board[end[1]][end[0]] === null) {
             //logic to move piece
             board[start[1]][start[0]] = board[end[1]][end[0]]
-            board[end[1]][end[0]] = startPiece
+            piece.coordinate = end
+            board[end[1]][end[0]] = piece
         } else {
             //logic to capture piece
             board[start[1]][start[0]] = null;
             capturedPiece = board[end[1]][end[0]]
-            board[end[1]][end[0]] = startPiece;
+            piece.coordinate = end
+            board[end[1]][end[0]] = piece;
         }
         this.setState({ board: board, squares: board.flat() })
         return capturedPiece
