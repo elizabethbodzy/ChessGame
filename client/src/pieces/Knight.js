@@ -10,7 +10,7 @@ class Knight extends Piece {
         this.label = 'knight'
         this.color = this.player === 1 ? 'white' : 'black'
         this.coordinate = [x, y]
-        this.generateMove = (board = []) => {
+        this.generateMoves = (board = []) => {
             const allMoves = [];
             const x = this.coordinate[0];
             const y = this.coordinate[1];
