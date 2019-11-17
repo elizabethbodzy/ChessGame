@@ -10,10 +10,10 @@ class Knight extends Piece {
         this.label = 'knight'
         this.color = this.player === 1 ? 'white' : 'black'
         this.coordinate = [x, y]
-        this.generateMove = (start = [], board = []) => {
+        this.generateMove = (board = []) => {
             const allMoves = [];
-            const x = start[0];
-            const y = start[1];
+            const x = this.coordinate[0];
+            const y = this.coordinate[1];
 
             if (!(x + 1 > 7) && !(y + 2 > 7)) {
                 if (board[y + 2][x + 1] === null ||
@@ -76,7 +76,7 @@ class Knight extends Piece {
         }
 
         this.validMove = function (start = [], end = [], board = []) {
-            const allMoves = this.generateMove(start, board)
+            const allMoves = this.generateMove(board)
             let valid = false
             allMoves.forEach(coordinate => {
                 if (coordinate.toString() === end.toString()) {
