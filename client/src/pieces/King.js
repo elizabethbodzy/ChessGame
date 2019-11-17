@@ -1,7 +1,7 @@
 import Piece from './piece';
 
 class King extends Piece {
-    constructor(player) {
+    constructor(player,x,y) {
         super(player, (player === 1 ? 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Chess_klt60.png' : 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Chess_kdt60.png'))
         this.intialPositions = {
             1: [4, 7],
@@ -9,7 +9,7 @@ class King extends Piece {
         }
         this.label = 'king'
         this.color = this.player === 1 ? 'white' : 'black'
-
+        this.coordinate = [x,y]
         this.generateMoves = (start = [], board = []) => {
             const allMoves = [];
             const x = start[0]

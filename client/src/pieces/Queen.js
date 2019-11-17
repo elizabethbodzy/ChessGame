@@ -9,7 +9,7 @@ class Queen extends Piece {
         }
         this.label = 'queen'
         this.color = this.player === 1 ? 'white' : 'black'
-
+        this.coordinate = [x, y]
         this.generateMoves = (start = [], board = []) => {
             const allMoves = [];
             const x = start[0];
