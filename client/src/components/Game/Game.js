@@ -46,6 +46,17 @@ class Game extends React.Component {
         return capturedPiece
     }
 
+    validateMove = (piece, end = [], board = []) => {
+        const allMoves = piece.generateMoves(board);
+        let valid = false
+        allMoves.forEach(coordinate => {
+            if (coordinate.toString() === end.toString()) {
+                valid = true;
+            }
+        })
+        return valid;
+    }
+
     getFirstCoordinate = (x, y) => {
         this.setState({ coordinates: [x, y] })
     }
@@ -59,7 +70,7 @@ class Game extends React.Component {
 
         if (piece === null) {
             console.log('no piece')
-        } else if (piece.validMove(this.state.coordinates, [x, y], this.state.board)) {
+        } else if (this.validateMove(piece, [x, y], board)) {
             this.movePiece(this.state.coordinates, [x, y])
             if (piece.label === 'pawn') {
                 piece.hasMoved = true
