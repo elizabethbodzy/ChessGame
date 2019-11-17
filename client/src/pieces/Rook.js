@@ -10,9 +10,9 @@ class Rook extends Piece {
         this.label = 'rook'
         this.color = this.player === 1 ? 'white' : 'black'
         this.coordinate = [x,y]
-        this.generateMoves = (start = [], board = []) => {
-            const x = start[0];
-            const y = start[1];
+        this.generateMoves = (board = []) => {
+            const x = this.coordinate[0];
+            const y = this.coordinate[1];
             const allMoves= [];
 
             for (let i = x + 1; i < 8; i++) {
@@ -64,7 +64,7 @@ class Rook extends Piece {
         }
 
         this.validMove = function (start = [], end = [], board = []) {
-            const allMoves= this.generateMoves(start, board);
+            const allMoves= this.generateMoves(board);
             let valid = false
             allMoves.forEach(coordinate =>{
                 if(coordinate.toString() === end.toString()){
