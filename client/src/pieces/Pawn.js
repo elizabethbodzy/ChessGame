@@ -58,17 +58,6 @@ class Pawn extends Piece {
             console.log(allMoves)
             return allMoves
         }
-
-        this.validMove = function (start = [], end = [], board = []) {
-            const allMoves = this.generateMoves(board);
-            let valid = false
-            allMoves.forEach(coordinate => {
-                if (coordinate.toString() === end.toString()) {
-                    valid = true;
-                }
-            })
-            return valid
-        }
     }
 }
 

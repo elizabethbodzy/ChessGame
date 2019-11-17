@@ -74,17 +74,6 @@ class Knight extends Piece {
             return allMoves
 
         }
-
-        this.validMove = function (start = [], end = [], board = []) {
-            const allMoves = this.generateMove(board)
-            let valid = false
-            allMoves.forEach(coordinate => {
-                if (coordinate.toString() === end.toString()) {
-                    valid = true;
-                }
-            })
-            return valid;
-        }
     }
 }
 
