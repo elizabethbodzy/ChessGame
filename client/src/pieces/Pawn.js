@@ -16,9 +16,9 @@ class Pawn extends Piece {
         this.coordinate = [x, y]
         this.hasMoved = false
 
-        this.generateMoves = (start = [], board = []) => {
-            const x = start[0];
-            const y = start[1];
+        this.generateMoves = (board = []) => {
+            const x = this.coordinate[0];
+            const y = this.coordinate[1];
             const allMoves = [];
             const moveY = this.orientation
             console.log(moveY)
@@ -60,7 +60,7 @@ class Pawn extends Piece {
         }
 
         this.validMove = function (start = [], end = [], board = []) {
-            const allMoves = this.generateMoves(start, board);
+            const allMoves = this.generateMoves(board);
             let valid = false
             allMoves.forEach(coordinate => {
                 if (coordinate.toString() === end.toString()) {
