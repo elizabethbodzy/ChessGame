@@ -7,7 +7,7 @@ class Game extends React.Component {
         board: [],
         squares: initializeBoard(),
         coordinates: [],
-        hasCoordinate: false
+        player1: true
     }
 
     initializeBoardState = () => {
@@ -16,15 +16,6 @@ class Game extends React.Component {
         for (let i = 0; i < squares.length; i += 8) { board.push(squares.slice(i, i + 8)) }
         return board
     }
-
-
-    componentDidMount() {
-        const board = this.initializeBoardState();
-        this.setState({ board })
-    }
-
-    componentDidUpdate() { }
-
 
     movePiece = (start = [], end = []) => {
         const board = this.state.board;
@@ -42,19 +33,63 @@ class Game extends React.Component {
             piece.coordinate = end
             board[end[1]][end[0]] = piece;
         }
-        this.setState({ board: board, squares: board.flat() })
+        this.setState({ board: board, squares: board.flat(), player1: !this.state.player1 })
         return capturedPiece
     }
 
     validateMove = (piece, end = [], board = []) => {
+        //player check here
+        const playerColor = this.state.player1 ? 'white' : 'black'
         const allMoves = piece.generateMoves(board);
         let valid = false
-        allMoves.forEach(coordinate => {
-            if (coordinate.toString() === end.toString()) {
-                valid = true;
-            }
-        })
+        if (piece.color === playerColor) {
+            allMoves.forEach(coordinate => {
+                if (coordinate.toString() === end.toString()) {
+                    valid = true;
+                }
+            })
+        }
         return valid;
+    }
+
+    checkListener = () => {
+        const playerColor = this.state.player1 ? 'white' : 'black';
+        const opponentColor = !this.state.player1 ? 'white' : 'black';
+        const squares = this.state.squares;
+        const board = this.state.board
+
+        // let opponentMovesPossible = squares.map((square) => {
+        //     if (square && square.color === opponentColor) {
+        //         square.generateMoves(board).flat();
+        //     }
+        // })
+
+        const opponentMovesPossible = squares.map((square) => {
+            if (square && square.color === opponentColor) {
+                return square.generateMoves(board)
+            } else {
+                return
+            }
+        }).filter((arr) => arr !== undefined).flat();
+
+        const king = squares.find(square => square && square.color === playerColor && square.label === 'king');
+
+        const kingMoves = king.generateMoves(board);
+
+        const check = opponentMovesPossible.find(move => move.toString() === king.coordinate.toString())
+
+        // const checkmate = opponentMovesPossible.filter(move => kingMoves.forEach(kingMove => { move.toString() === kingMove.toString() }))
+
+        if (check) {
+            console.log('Check!')
+        }
+
+
+
+        // map through the squares to calculate all moves put it into the opponentMoves
+        // check to see if the king is in that set of opponentMoves if so alert checked
+        // generate all king moves and filter out all moves that match the moves in oppenent moves if array is empty CHECKMATE
+
     }
 
     getFirstCoordinate = (x, y) => {
@@ -80,6 +115,14 @@ class Game extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const board = this.initializeBoardState();
+        this.setState({ board })
+    }
+
+    componentDidUpdate() {
+        this.checkListener();
+    }
     render() {
         return (
             <>
