@@ -79,7 +79,7 @@ class Bishop extends Piece {
                     }
                 }
             }
-            console.log(allMoves)
+            // console.log(allMoves)
             return allMoves
         }
     }

@@ -123,7 +123,7 @@ class Queen extends Piece {
                     break;
                 }
             }
-            console.log(allMoves)
+            // console.log(allMoves)
             return allMoves
         }
     }

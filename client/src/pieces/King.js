@@ -78,7 +78,7 @@ class King extends Piece {
                 }
             }
 
-            console.log(allMoves)
+            // console.log(allMoves)
             return allMoves
         }
     }

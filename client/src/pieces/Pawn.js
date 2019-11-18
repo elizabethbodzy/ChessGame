@@ -21,7 +21,7 @@ class Pawn extends Piece {
             const y = this.coordinate[1];
             const allMoves = [];
             const moveY = this.orientation
-            console.log(moveY)
+            // console.log(moveY)
 
             if (moveY === -1) {
                 if (!board[y - moveY][x]) {
@@ -55,7 +55,7 @@ class Pawn extends Piece {
                 }
             }
 
-            console.log(allMoves)
+            // console.log(allMoves)
             return allMoves
         }
     }
