@@ -10,8 +10,8 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggleChat: false
-            // userName: this.state.userName,
+            toggleChat: false,
+            userName: ''
             // totalGames: this.state.totalGames,
             // points: this.state.points,
             // wins: this.state.wins,
@@ -24,11 +24,15 @@ class Profile extends Component {
         document.body.style.margin = '0';
         document.body.style.padding = '0';
         document.body.style.boxSizing = 'border-box';
-    }
+        document.body.style.display = 'flex';
+        document.body.style.flexDirection = 'column';
+        document.body.style.height = '100vh';
+        document.body.style.width = '100%';
+    };
 
     toggleChat = () => {
         this.setState({toggleChat : true})
-    }
+    };
 
     render() {
         return (
@@ -46,7 +50,7 @@ class Profile extends Component {
                                         <a href='#'><i class="fas fa-camera"></i> Add Photo</a>
                                     </div>
                                     <div className='user-info'>
-                                        <h3>Username</h3>
+                                        <h3>{this.state.userName}</h3>
                                     </div>
                                 </div>
                             </Segment>

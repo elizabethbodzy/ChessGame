@@ -91,6 +91,7 @@ form {
     text-align: center;
 }
 
+/* ===== FACEBOOK AND GOOGLE PLUS BUTTONS ===== */
 .social-container {
     margin: 20px 0;
 }
@@ -107,6 +108,22 @@ form {
     width: 40px;
 }
 
+#facebook {
+    border: 1px solid #ddd;
+    border-radius: 50% !important;
+    color: #fff !important;
+    margin: 0 5px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+#facebook span {
+    color: #000;
+}
+
+/* ============================================= */
+
 .form-container input {
     background: #eee;
     border: none;
@@ -119,7 +136,7 @@ form {
     outline: none;
 }
 
-button {
+.button {
     border-radius: 20px;
     border: 1px solid #000;
     background: #000;
@@ -143,7 +160,16 @@ button:focus {
 
 button.ghost {
     background: transparent;
-    border-color: #fff;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
 }
 
 .form-container {

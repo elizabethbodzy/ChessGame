@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import API from '../../utils/API';
 import { email, password, minLength, required } from '../../utils/validators';
+import Facebook from './Facebook';
 import './signUp.css';
 
 class SignUpForm extends Component {
@@ -78,11 +79,7 @@ class SignUpForm extends Component {
                     window.location.href = '/profile';
                 }
                 if (res.data.error) {
-                    this.setState({ 
-                        error: res.data.error,
-                        email: '',
-                        password: ''
-                     });
+                    this.setState({ error: res.data.error });
                     alert('Incorrect email or password');
                 }
             })
@@ -116,7 +113,7 @@ class SignUpForm extends Component {
                         <form action='#'>
                             <h1>Create Account</h1>
                             <div class="social-container">
-                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                <Facebook />
                                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                             </div>
                             <span>or create an account</span>
@@ -140,7 +137,7 @@ class SignUpForm extends Component {
                                 onChange={this.handleInputChange}
                                 type='password'
                                 placeholder='Password' />
-                            <button onClick={this.handleSignUp}>Sign Up</button>
+                            <button className='button' onClick={this.handleSignUp}>Sign Up</button>
                         </form>
                     </div>
                     {/* ===== SIGN IN FORM ===== */}
@@ -165,7 +162,7 @@ class SignUpForm extends Component {
                                 type='password'
                                 placeholder='Password' />
                             <a href='#'>Forgot your password?</a>
-                            <button onClick={this.handleSignIn}>Sign In</button>
+                            <button className='button' onClick={this.handleSignIn}>Sign In</button>
                         </form>
                     </div>
                     {/* ===== OVERLAY CONTAINER FOR THE ENTIRE FORM ===== */}
