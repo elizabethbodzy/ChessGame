@@ -21,7 +21,7 @@ const Chat = ({ location }) => {
 
   // const [state, dispatch] = useChatState()
 
-  const ENDPOINT = "localhost:3001";
+  const ENDPOINT = "/";
 
   // useEffect(() => {
   //     console.log(state)
