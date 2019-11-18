@@ -1,7 +1,7 @@
 import Piece from './piece';
 
 class Queen extends Piece {
-    constructor(player) {
+    constructor(player,x,y) {
         super(player, (player === 1 ? 'https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png' : 'https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png'))
         this.intialPositions = {
             1: [[3, 7]],
@@ -9,11 +9,11 @@ class Queen extends Piece {
         }
         this.label = 'queen'
         this.color = this.player === 1 ? 'white' : 'black'
-
-        this.generateMoves = (start = [], board = []) => {
+        this.coordinate = [x, y]
+        this.generateMoves = (board = []) => {
             const allMoves = [];
-            const x = start[0];
-            const y = start[1];
+            const x = this.coordinate[0];
+            const y = this.coordinate[1];
 
             Loop1: for (let i = x + 1; i < 8; i++) {
                 for (let j = y + 1; j < 8; j++) {
@@ -123,19 +123,8 @@ class Queen extends Piece {
                     break;
                 }
             }
-            console.log(allMoves)
+            // console.log(allMoves)
             return allMoves
-        }
-
-        this.validMove = function (start = [], end = [], board = []) {
-            const allMoves = this.generateMoves(start, board);
-            let valid = false
-            allMoves.forEach(coordinate => {
-                if (coordinate.toString() === end.toString()) {
-                    valid = true;
-                }
-            })
-            return valid
         }
     }
 }

@@ -1,7 +1,7 @@
 import Piece from './piece';
 
 class Bishop extends Piece {
-    constructor(player) {
+    constructor(player,x,y) {
         super(player, (player === 1 ? 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png' : 'https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png'))
         this.intialPositions = {
             1: [[2, 7], [5, 7]],
@@ -10,11 +10,11 @@ class Bishop extends Piece {
 
         this.label = 'bishop'
         this.color = this.player === 1 ? 'white' : 'black'
-
-        this.generateMoves = (start = [], board = []) => {
+        this.coordinate = [x,y]
+        this.generateMoves = (board = []) => {
             const allMoves = [];
-            const x = start[0];
-            const y = start[1];
+            const x = this.coordinate[0];
+            const y = this.coordinate[1];
 
             Loop1: for (let i = x + 1; i < 8; i++) {
                 for (let j = y + 1; j < 8; j++) {
@@ -79,19 +79,8 @@ class Bishop extends Piece {
                     }
                 }
             }
-            console.log(allMoves)
+            // console.log(allMoves)
             return allMoves
-        }
-
-        this.validMove = function (start = [], end = [], board = []) {
-            const allMoves = this.generateMoves(start, board);
-            let valid = false
-            allMoves.forEach(coordinate => {
-                if (coordinate.toString() === end.toString()) {
-                    valid = true;
-                }
-            })
-            return valid;
         }
     }
 }

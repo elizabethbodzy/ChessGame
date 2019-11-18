@@ -1,7 +1,7 @@
 import Piece from './piece';
 
 class Knight extends Piece {
-    constructor(player) {
+    constructor(player, x, y) {
         super(player, (player === 1 ? 'https://upload.wikimedia.org/wikipedia/commons/2/28/Chess_nlt60.png' : 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png'))
         this.intialPositions = {
             1: [[1, 7], [6, 7]],
@@ -9,11 +9,11 @@ class Knight extends Piece {
         }
         this.label = 'knight'
         this.color = this.player === 1 ? 'white' : 'black'
-
-        this.generateMove = (start = [], board = []) => {
+        this.coordinate = [x, y]
+        this.generateMoves = (board = []) => {
             const allMoves = [];
-            const x = start[0];
-            const y = start[1];
+            const x = this.coordinate[0];
+            const y = this.coordinate[1];
 
             if (!(x + 1 > 7) && !(y + 2 > 7)) {
                 if (board[y + 2][x + 1] === null ||
@@ -73,17 +73,6 @@ class Knight extends Piece {
 
             return allMoves
 
-        }
-
-        this.validMove = function (start = [], end = [], board = []) {
-            const allMoves = this.generateMove(start, board)
-            let valid = false
-            allMoves.forEach(coordinate =>{
-                if(coordinate.toString() === end.toString()){
-                    valid = true;
-                }
-            })
-            return valid;
         }
     }
 }
