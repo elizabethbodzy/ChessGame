@@ -1,6 +1,7 @@
 .form {
     display: flex;
     border-top: 2px solid #D3D3D3;
+    height: 30%;
   }
   
   .input {
@@ -20,8 +21,9 @@
     text-transform: uppercase;
     text-decoration: none;
     background: #2979FF;
-    padding: 20px;
+    padding: 10px;
     display: inline-block;
     border: none;
+    border-radius: 4px 4px 4px 4px;
     /* width: 20%; */
   }
