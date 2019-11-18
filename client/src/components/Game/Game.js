@@ -4,10 +4,25 @@ import initializeBoard from '../../helper/initializeBoard';
 
 class Game extends React.Component {
     state = {
+        gameOver: false,
         board: [],
         squares: initializeBoard(),
         coordinates: [],
-        player1: true
+        players: [
+            {
+                player: '',
+                color: 'white',
+                isTurn: true,
+                inCheck: false
+            },
+            {
+                player: '',
+                color: 'black',
+                isTurn: false,
+                inCheck: false
+            }
+        ]
+
     }
 
     initializeBoardState = () => {
@@ -15,6 +30,15 @@ class Game extends React.Component {
         let squares = this.state.squares
         for (let i = 0; i < squares.length; i += 8) { board.push(squares.slice(i, i + 8)) }
         return board
+    }
+
+    switchTurn = () => {
+        const { players } = this.state
+
+        players.forEach(player => {
+            player.isTurn = !player.isTurn
+        })
+        this.setState({ players })
     }
 
     movePiece = (start = [], end = []) => {
@@ -33,16 +57,17 @@ class Game extends React.Component {
             piece.coordinate = end
             board[end[1]][end[0]] = piece;
         }
-        this.setState({ board: board, squares: board.flat(), player1: !this.state.player1 })
+        this.setState({ board: board, squares: board.flat() })
+        this.switchTurn();
         return capturedPiece
     }
 
     validateMove = (piece, end = [], board = []) => {
         //player check here
-        const playerColor = this.state.player1 ? 'white' : 'black'
+        const player = this.state.players.find(player => player.isTurn)
         const allMoves = piece.generateMoves(board);
         let valid = false
-        if (piece.color === playerColor) {
+        if (piece.color === player.color) {
             allMoves.forEach(coordinate => {
                 if (coordinate.toString() === end.toString()) {
                     valid = true;
@@ -53,8 +78,8 @@ class Game extends React.Component {
     }
 
     checkListener = () => {
-        const playerColor = this.state.player1 ? 'white' : 'black';
-        const opponentColor = !this.state.player1 ? 'white' : 'black';
+        const player = this.state.players.find(player => player.isTurn)
+        const opponent = this.state.players.find(player => !player.isTurn);
         const squares = this.state.squares;
         const board = this.state.board
 
@@ -65,14 +90,14 @@ class Game extends React.Component {
         // })
 
         const opponentMovesPossible = squares.map((square) => {
-            if (square && square.color === opponentColor) {
+            if (square && square.color === opponent.color) {
                 return square.generateMoves(board)
             } else {
                 return
             }
         }).filter((arr) => arr !== undefined).flat();
 
-        const king = squares.find(square => square && square.color === playerColor && square.label === 'king');
+        const king = squares.find(square => square && square.color === player.color && square.label === 'king');
 
         const kingMoves = king.generateMoves(board);
 
