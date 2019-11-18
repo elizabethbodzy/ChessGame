@@ -1,7 +1,7 @@
 class Piece {
     constructor(player,iconUrl){
         this.player = player;
-        this.icon = iconUrl
+        this.icon = iconUrl;
     }
 }
 
