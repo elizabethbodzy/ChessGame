@@ -39,6 +39,7 @@ class Game extends React.Component {
             player.isTurn = !player.isTurn
         })
         this.setState({ players })
+        this.checkListener();
     }
 
     movePiece = (start = [], end = []) => {
@@ -106,15 +107,26 @@ class Game extends React.Component {
         // const checkmate = opponentMovesPossible.filter(move => kingMoves.forEach(kingMove => { move.toString() === kingMove.toString() }))
 
         if (check) {
-            console.log('Check!')
+            const {players}= this.state
+            players.forEach(player=>{
+                if (player.isTurn){
+                    player.inCheck = true
+                }
+            })
+            this.setState({players})
+        } else {
+            const {players}= this.state
+            players.forEach(player=>{
+                if (player.isTurn){
+                    player.inCheck = false
+                }
+            })
+            this.setState({players})
         }
-
-
-
+        console.log(this.state.players)
         // map through the squares to calculate all moves put it into the opponentMoves
         // check to see if the king is in that set of opponentMoves if so alert checked
         // generate all king moves and filter out all moves that match the moves in oppenent moves if array is empty CHECKMATE
-
     }
 
     getFirstCoordinate = (x, y) => {
@@ -145,9 +157,7 @@ class Game extends React.Component {
         this.setState({ board })
     }
 
-    componentDidUpdate() {
-        this.checkListener();
-    }
+    componentDidUpdate() {}
     render() {
         return (
             <>
