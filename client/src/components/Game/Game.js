@@ -1,7 +1,10 @@
 import React from 'react';
 import Board from './Board/Board';
 import initializeBoard from '../../helper/initializeBoard';
-
+import io from 'socket.io-client';
+import queryString from 'query-string';
+import { withRouter } from 'react-router'
+import connect from '../../socket';
 class Game extends React.Component {
     state = {
         gameOver: false,
@@ -22,8 +25,9 @@ class Game extends React.Component {
                 inCheck: false
             }
         ]
-
     }
+
+    room
 
     initializeBoardState = () => {
         const board = [];
@@ -44,8 +48,9 @@ class Game extends React.Component {
 
     movePiece = (start = [], end = []) => {
         const board = this.state.board;
-        const piece = board[start[1]][start[0]]
-        let capturedPiece
+        const piece = board[start[1]][start[0]];
+
+        let capturedPiece;
         if (board[end[1]][end[0]] === null) {
             //logic to move piece
             board[start[1]][start[0]] = board[end[1]][end[0]]
@@ -107,21 +112,21 @@ class Game extends React.Component {
         // const checkmate = opponentMovesPossible.filter(move => kingMoves.forEach(kingMove => { move.toString() === kingMove.toString() }))
 
         if (check) {
-            const {players}= this.state
-            players.forEach(player=>{
-                if (player.isTurn){
+            const { players } = this.state
+            players.forEach(player => {
+                if (player.isTurn) {
                     player.inCheck = true
                 }
             })
-            this.setState({players})
+            this.setState({ players })
         } else {
-            const {players}= this.state
-            players.forEach(player=>{
-                if (player.isTurn){
+            const { players } = this.state
+            players.forEach(player => {
+                if (player.isTurn) {
                     player.inCheck = false
                 }
             })
-            this.setState({players})
+            this.setState({ players })
         }
         console.log(this.state.players)
         // map through the squares to calculate all moves put it into the opponentMoves
@@ -144,6 +149,7 @@ class Game extends React.Component {
             console.log('no piece')
         } else if (this.validateMove(piece, [x, y], board)) {
             this.movePiece(this.state.coordinates, [x, y])
+            this.pushMove({ start: this.state.coordinates, end: [x, y] })
             if (piece.label === 'pawn') {
                 piece.hasMoved = true
             }
@@ -155,9 +161,44 @@ class Game extends React.Component {
     componentDidMount() {
         const board = this.initializeBoardState();
         this.setState({ board })
+        this.room = queryString.parse(this.props.location.search).room
+        // const {name,room} = this.room
+        // this.socket.emit("join", { name, room }, error => {
+        //     if (error) {
+        //       alert(error);
+        //     }
+        //   });
+
+        // this.socket.on('move', move => {
+        //     console.log(move)
+        //     // this.movePiece(move.start, move.end)
+        // })             
+        connect().then((socket) => {
+            socket.on('getMove', function(move) {
+                console.log(move)
+            })
+        })
     }
 
-    componentDidUpdate() {}
+    pushMove = (move) => {
+        connect().then((socket) => {
+            socket.emit('move', { move, room: this.room })
+        })
+    }
+
+    getMove = () => {
+        // this.socket.on('move', move => {
+        //     console.log(move)
+        //     this.movePiece(move.start, move.end)
+        // })
+    }
+
+    // componentDidUpdate() {
+    //     this.socket.on('move', move => {
+    //         console.log(move)
+    //         // this.movePiece(move.start, move.end)
+    //     })        
+    // }
     render() {
         return (
             <>
@@ -169,4 +210,4 @@ class Game extends React.Component {
     }
 }
 
-export default Game;
+export default withRouter(Game);
