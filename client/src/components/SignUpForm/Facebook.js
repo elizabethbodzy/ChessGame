@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
+import API from '../../utils/API';
 
-export default class Facebook extends Component {
+class Facebook extends Component {
     state = {
         isLoggedIn: false,
         userID: '',
@@ -10,46 +12,55 @@ export default class Facebook extends Component {
         picture: ''
     };
 
-    componentClicked = () => console.log('clicked');
-
     responseFacebook = response => {
-        // console.log(response);
+        console.log(this.props);
+        if (this.props.pathname === '/auth/signin') {
+            console.log('This should sign in');
+        } else if (this.props.pathname === '/auth/signup') {
+            API.createUser({
+                name: response.name,
+                email: response.email,
+                userID: response.userID
+            })
+                .then(() => {
+                    this.props.history.replace({
+                        pathname: '/profile'
+                    });
+                })
+                .catch(err => console.log(err));
+        }
+
         this.setState({
             isLoggedIn: true,
-            userID: response.userID,
-            name: response.name,
-            email: response.email,
-            picture: response.picture.data.url
-        })
-    }
+        });
+    };
+
+    componentClicked = () => console.log('clicked');
 
     render() {
         let fbContent;
 
         if (this.state.isLoggedIn) {
-            fbContent = (
-                <div></div>
-            )
+            fbContent = null;
         } else {
-    fbContent = (
-        <FacebookLogin
-            appId='427827818144125'
-            autoLoad={true}
-            fields='name, email, picture'
-            onClick={componentClicked}
-            callback={this.responseFacebook}
-            render={renderProps => (
-                <button oncClick={renderProps.oncClick} id='facebook'>
-                    <span><i class="fab fa-facebook-f"></i></span>
-                </button>
-            )}>
-        </FacebookLogin>);
-}
-return (
+            fbContent = (
+                <FacebookLogin
+                    appId='427827818144125'
+                    autoLoad={false}
+                    fields='name,email,picture'
+                    onClick={this.componentClicked}
+                    callback={this.responseFacebook}
+                />
+            );
+        }
 
-    <>
-        {fbContent}
-    </>
-)
+        return (
+            <>
+                {fbContent}
+            </>
+        )
+
     }
 }
+
+export default withRouter(Facebook);

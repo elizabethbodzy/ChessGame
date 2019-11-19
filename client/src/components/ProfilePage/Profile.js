@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 import Navbar from '../Navbar/Navbar';
-import { Segment, Button, Divider, Grid } from 'semantic-ui-react';
+import { Segment, Button, Grid } from 'semantic-ui-react';
 import './profile.css';
 import Join from '../Join/Join';
 import Chat from '../Chat/Chat';
@@ -36,7 +36,7 @@ class Profile extends Component {
 
     render() {
         return (
-            <>
+            <div className='main-container'>
                 <Navbar />
                 <Grid className='page-container'>
                     <Grid.Row columns={2} className='profile-container'>
@@ -90,7 +90,7 @@ class Profile extends Component {
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
-            </>
+            </div>
         )
     }
 

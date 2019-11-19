@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import API from '../../utils/API';
 import { email, password, minLength, required } from '../../utils/validators';
-import Facebook from './Facebook';
+// import Facebook from './Facebook';
 import './signUp.css';
 
 class SignUpForm extends Component {
@@ -21,6 +21,7 @@ class SignUpForm extends Component {
     };
 
     componentDidMount() {
+        // console.log(this.props);
         document.body.style.height = '100vh';
         document.body.style.display = 'flex';
         document.body.style.flexDirection = 'column';
@@ -32,6 +33,8 @@ class SignUpForm extends Component {
     handleInputChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
+
 
     handleSignUp = (event) => {
         event.preventDefault();
@@ -46,7 +49,7 @@ class SignUpForm extends Component {
                     email: '',
                     password: ''
                 })
-                window.location.href = '/profile';
+                this.props.history.replace({ pathname: '/profile' });
             })
             .catch(err => console.log(err));
     };
@@ -76,7 +79,7 @@ class SignUpForm extends Component {
                 localStorage.setItem('jwtToken', res.data.token);
                 if (res.data.success) {
                     this.updateUser();
-                    window.location.href = '/profile';
+                    this.props.history.replace({ pathname: '/profile' });
                 }
                 if (res.data.error) {
                     this.setState({ error: res.data.error });
@@ -90,7 +93,7 @@ class SignUpForm extends Component {
         this.setState({
             toggle: !this.state.toggle
         })
-    }
+    };
 
     render() {
         return (
@@ -113,7 +116,8 @@ class SignUpForm extends Component {
                         <form action='#'>
                             <h1>Create Account</h1>
                             <div class="social-container">
-                                <Facebook />
+                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                {/* <Facebook handleSignUp={this.handleSignUp} pathname='/auth/signup' /> */}
                                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                             </div>
                             <span>or create an account</span>
@@ -137,7 +141,7 @@ class SignUpForm extends Component {
                                 onChange={this.handleInputChange}
                                 type='password'
                                 placeholder='Password' />
-                            <button className='button' onClick={this.handleSignUp}>Sign Up</button>
+                            <button onClick={this.handleSignUp}>Sign Up</button>
                         </form>
                     </div>
                     {/* ===== SIGN IN FORM ===== */}
@@ -145,6 +149,7 @@ class SignUpForm extends Component {
                         <form action='#'>
                             <h1>Sign In</h1>
                             <div class="social-container">
+                                {/* <Facebook handleSignIn={this.handleSignIn} pathname='/auth/signin' /> */}
                                 <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                             </div>
@@ -162,7 +167,7 @@ class SignUpForm extends Component {
                                 type='password'
                                 placeholder='Password' />
                             <a href='#'>Forgot your password?</a>
-                            <button className='button' onClick={this.handleSignIn}>Sign In</button>
+                            <button onClick={this.handleSignIn}>Sign In</button>
                         </form>
                     </div>
                     {/* ===== OVERLAY CONTAINER FOR THE ENTIRE FORM ===== */}
