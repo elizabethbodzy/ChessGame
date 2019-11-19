@@ -70,17 +70,19 @@ io.on("connection", socket => {
         // }
 
         // chatRooms[room] = [].concat(name)
-
-        const { error, user } = addUser({ id: socket.id, name, room });
-
         const amountOfUsers = getUsersInRoom(room).length;
 
-        if (amountOfUsers > 2) {
-            // console.log('what the ????')
+        if (amountOfUsers >= 2) {
+            socket.emit('join', {status: 403, statusMessage: 'Room is full. Cannot Join!', id: socket.id})
+            console.log('join', {status: 403, statusMessage: 'Room is full. Cannot Join!'})
             return;
+            
+            
         }
 
-
+        
+        const { error, user } = addUser({ id: socket.id, name, room });
+        
         if (error) return callback(error);
 
         socket.join(user.room);

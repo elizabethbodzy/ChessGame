@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { withRouter } from "react-router";
 import {Message} from "semantic-ui-react";
 import queryString from "query-string";
 import io from "socket.io-client";
@@ -12,7 +13,7 @@ import { useChatState } from '../GameContainer/GameContainer'
 
 let socket;
 
-const Chat = ({ location }) => {
+const Chat = ({ location, history }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
   const [users, setUsers] = useState("");
@@ -36,11 +37,12 @@ const Chat = ({ location }) => {
   
 
   useEffect(() => {
+    console.log(location);
       
     const { name, room } = queryString.parse(location.search);
 
     socket = io(ENDPOINT);
-    // console.log(socket);
+    console.log(socket);
 
 
     setName(name);
@@ -57,6 +59,13 @@ const Chat = ({ location }) => {
     socket.on("message", message => {
       setMessages([...messages, message]);
     });
+
+    socket.on("join", ({status, statusMessage, id}) => {
+      if(status === 403 && id === socket.id) {
+        alert(statusMessage);
+        history.replace('/profile');
+      }
+    } )
 
     socket.on("roomData", ({ users }) => {
       console.log(users)
@@ -110,4 +119,4 @@ const Chat = ({ location }) => {
   );
 };
 
-export default Chat;
+export default withRouter(Chat);
