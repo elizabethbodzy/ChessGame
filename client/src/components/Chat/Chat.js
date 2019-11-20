@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { withRouter } from "react-router";
 import { Message } from "semantic-ui-react";
 import queryString from "query-string";
 
@@ -117,4 +118,4 @@ const Chat = ({ location, name ,room}) => {
   );
 };
 
-export default Chat;
+export default withRouter(Chat);

@@ -73,6 +73,8 @@ io.on("connection", socket => {
         if (amountOfUsers >= 2) {
             // console.log('what the ????')
             return;
+            
+            
         }
         const { error, user } = addUser({ id: socket.id, name, room });
 

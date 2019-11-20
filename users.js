@@ -2,6 +2,8 @@ const users = [];
 
 const addUser = ({ id, name, room}) => {
     //If user enters JavaScript Mastery = javascriptmastery
+    console.log('user joined', {id, name, room});
+    console.log(users);
 
     name = name.trim().toLowerCase();
     room = room.trim().toLowerCase();

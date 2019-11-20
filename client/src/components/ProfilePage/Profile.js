@@ -76,7 +76,7 @@ class Profile extends Component {
                         <Grid.Column>
                             <Segment className='join'>
                                 {
-                                    this.state.toggleChat ? <Chat location={this.props.location}/> : <Join toggleChat={this.toggleChat} />
+                                    this.state.toggleChat ? <Chat /> : <Join toggleChat={this.toggleChat} />
                                 }
                             
                                 
