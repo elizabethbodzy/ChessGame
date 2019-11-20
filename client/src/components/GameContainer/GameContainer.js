@@ -68,7 +68,7 @@ const GameContainer = ({ location }) => {
 
         <Grid.Row>
           <Grid.Column width={4}>
-            <Chat location={location} />
+            <Chat location={location} name={name} room={room} />
 
 
 

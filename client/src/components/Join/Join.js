@@ -13,9 +13,9 @@ const Join = ({toggleChat}) => {
 
   const [state, dispatch] = useChatState()
 
-  useEffect(() => {
-    console.log(state)
-  }, [])
+  // useEffect(() => {
+  //   console.log(state)
+  // }, [])
 
 
   const handleJoin = event => {

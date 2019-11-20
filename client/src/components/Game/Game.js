@@ -46,21 +46,19 @@ class Game extends React.Component {
         this.checkListener();
     }
 
-    movePiece = (start = [], end = []) => {
-        const board = this.state.board;
+    movePiece = (start = [], end = [], board = []) => {
         const piece = board[start[1]][start[0]];
-
+        console.log(board)
+        console.log(piece)
         let capturedPiece;
         if (board[end[1]][end[0]] === null) {
             //logic to move piece
             board[start[1]][start[0]] = board[end[1]][end[0]]
-            piece.coordinate = end
             board[end[1]][end[0]] = piece
         } else {
             //logic to capture piece
             board[start[1]][start[0]] = null;
             capturedPiece = board[end[1]][end[0]]
-            piece.coordinate = end
             board[end[1]][end[0]] = piece;
         }
         this.setState({ board: board, squares: board.flat() })
@@ -128,7 +126,7 @@ class Game extends React.Component {
             })
             this.setState({ players })
         }
-        console.log(this.state.players)
+        // console.log(this.state.players)
         // map through the squares to calculate all moves put it into the opponentMoves
         // check to see if the king is in that set of opponentMoves if so alert checked
         // generate all king moves and filter out all moves that match the moves in oppenent moves if array is empty CHECKMATE
@@ -148,7 +146,7 @@ class Game extends React.Component {
         if (piece === null) {
             console.log('no piece')
         } else if (this.validateMove(piece, [x, y], board)) {
-            this.movePiece(this.state.coordinates, [x, y])
+            this.movePiece(this.state.coordinates, [x, y], this.state.board)
             this.pushMove({ start: this.state.coordinates, end: [x, y] })
             if (piece.label === 'pawn') {
                 piece.hasMoved = true
@@ -184,17 +182,20 @@ class Game extends React.Component {
 
     getMove = () => {
         connect().then((socket) => {
-            socket.on('getMove', move => {
-                console.log(move)
-            })
+            setTimeout(() => {
+                socket.on('getMove', move => {
+                    console.log(move)
+                })
+            }, 5000)
         })
     }
 
     componentDidUpdate() {
-    //     this.socket.on('move', move => {
-    //         console.log(move)
-    //         // this.movePiece(move.start, move.end)
-    //     })     
+        //     this.socket.on('move', move => {
+        //         console.log(move)
+        //         // this.movePiece(move.start, move.end)
+        //     })     
+        // this.getMove(this.state.board,this.movePiece)
     }
     render() {
         return (
