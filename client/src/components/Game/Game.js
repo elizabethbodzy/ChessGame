@@ -77,7 +77,12 @@ class Game extends React.Component {
                 }
             })
         }
+
         return valid;
+
+        // escape checkmate validation only
+
+        // check endmove to only this  escape array
     }
 
     checkListener = () => {
@@ -101,9 +106,6 @@ class Game extends React.Component {
         }).filter((arr) => arr !== undefined).flat();
 
         const king = squares.find(square => square && square.color === player.color && square.label === 'king');
-
-        const kingMoves = king.generateMoves(board);
-
         const check = opponentMovesPossible.find(move => move.toString() === king.coordinate.toString())
 
         // const checkmate = opponentMovesPossible.filter(move => kingMoves.forEach(kingMove => { move.toString() === kingMove.toString() }))
@@ -116,6 +118,7 @@ class Game extends React.Component {
                 }
             })
             this.setState({ players })
+            alert('Check!')
         } else {
             const { players } = this.state
             players.forEach(player => {
@@ -125,10 +128,66 @@ class Game extends React.Component {
             })
             this.setState({ players })
         }
-        // console.log(this.state.players)
-        // map through the squares to calculate all moves put it into the opponentMoves
-        // check to see if the king is in that set of opponentMoves if so alert checked
-        // generate all king moves and filter out all moves that match the moves in oppenent moves if array is empty CHECKMATE
+    }
+
+    checkmateCheck = (player, board, squares) => {
+        const defendingKing = squares.find(square => square && square.color === player.color && square.label === 'king');
+        const checkmate = false;
+        const kingMoves = defendingKing.generateMoves(board)
+        const opponentMoves = squares.map((square) => {
+            if (square && square.color !== player.color) {
+                return { piece: square, moves: square.generateMoves(board) }
+            } else {
+                return
+            }
+        })
+
+        const playerMoves = squares.map((square) => {
+            if (square && square.color === player.color) {
+                return { piece: square, moves: square.generateMoves(board) }
+            } else {
+                return
+            }
+        })
+
+        let escapeMoves = []
+
+
+        //I have all the kings moves 
+        //filter out king moves that match with opponent moves if there are no king moves possible checkmate
+        const kingPossibleMoves = kingMoves.filter(moves => {
+            for (let i = 0; i < opponentMoves.length; i++) {
+                opponentMoves[i].moves.forEach(move => {
+                    return move.toString() !== moves.toString()
+                })
+            }
+        })
+
+        if (kingPossibleMoves) {
+            escapeMoves = [...escapeMoves, ...kingPossibleMoves]
+        }
+
+        //generate all moves for the player and map it so that its the piece then the move
+        // check to see if a piece can block the move
+
+        //look at opponentMoves and find the piece that can attack the kings current position and check if any piece can take that piece
+        const checkingPiece = opponentMoves.find(piece => {
+            piece.moves.forEach(move => {
+                return move.toString() === defendingKing.coordinate.toString()
+            })
+        })
+
+
+
+        // if all three fail checkmate is true
+
+        // else pass all possible checkmate escape moves to validation and return true for those moves
+        if (!escapeMoves) {
+            //Checkmate
+            alert('Checkmate')
+        } else {
+            return escapeMoves
+        }
     }
 
     getFirstCoordinate = (x, y) => {
@@ -179,7 +238,7 @@ class Game extends React.Component {
     }
 
     componentDidUpdate() {
-       
+
     }
     render() {
         return (
