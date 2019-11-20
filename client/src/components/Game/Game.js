@@ -173,11 +173,7 @@ class Game extends React.Component {
         //     console.log(move)
         //     // this.movePiece(move.start, move.end)
         // })             
-        connect().then((socket) => {
-            socket.on('getMove', function(move) {
-                console.log(move)
-            })
-        })
+        this.getMove()
     }
 
     pushMove = (move) => {
@@ -187,18 +183,19 @@ class Game extends React.Component {
     }
 
     getMove = () => {
-        // this.socket.on('move', move => {
-        //     console.log(move)
-        //     this.movePiece(move.start, move.end)
-        // })
+        connect().then((socket) => {
+            socket.on('getMove', move => {
+                console.log(move)
+            })
+        })
     }
 
-    // componentDidUpdate() {
+    componentDidUpdate() {
     //     this.socket.on('move', move => {
     //         console.log(move)
     //         // this.movePiece(move.start, move.end)
-    //     })        
-    // }
+    //     })     
+    }
     render() {
         return (
             <>
