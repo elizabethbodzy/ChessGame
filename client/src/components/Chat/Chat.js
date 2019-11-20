@@ -8,7 +8,7 @@ import Input from "../Input/Input";
 import Messages from "../Messages/Messages";
 
 import { useChatState } from '../GameContainer/GameContainer'
-import connect from "../../socket";
+import connect, { join } from "../../socket";
 
 const socket = connect()
 
@@ -37,21 +37,22 @@ const Chat = ({ location }) => {
 
 
   useEffect(() => {
+    const { name, room } = queryString.parse(location.search);
+    setName(name);
+    setRoom(room);
+    join({ name, room }).then(socket => {
+      socket.on("message", message => {
+        setMessages([...messages, message]);
+      });
 
-    // const { name, room } = queryString.parse(location.search);
+      socket.on("roomData", ({ users }) => {
+        // console.log(users)
+        // dispatch({ type: "SET_USERS", users })
 
+        setUsers(users);
+      });
+    });
 
-    // console.log(socket);
-
-
-    // setName(name);
-    // setRoom(room);
-
-    // socket.emit("join", { name, room }, error => {
-    //   if (error) {
-    //     alert(error);
-    //   }
-    // });
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const Chat = ({ location }) => {
       });
 
       socket.on("roomData", ({ users }) => {
-        console.log(users)
+        // console.log(users)
         // dispatch({ type: "SET_USERS", users })
 
         setUsers(users);
