@@ -1,7 +1,10 @@
 import React from 'react';
 import Board from './Board/Board';
 import initializeBoard from '../../helper/initializeBoard';
-
+import io from 'socket.io-client';
+import queryString from 'query-string';
+import { withRouter } from 'react-router'
+import connect from '../../socket';
 class Game extends React.Component {
     state = {
         gameOver: false,
@@ -22,8 +25,9 @@ class Game extends React.Component {
                 inCheck: false
             }
         ]
-
     }
+
+    room
 
     initializeBoardState = () => {
         const board = [];
@@ -42,20 +46,18 @@ class Game extends React.Component {
         this.checkListener();
     }
 
-    movePiece = (start = [], end = []) => {
-        const board = this.state.board;
-        const piece = board[start[1]][start[0]]
-        let capturedPiece
+    movePiece = (start = [], end = [], board = []) => {
+        const piece = board[start[1]][start[0]];
+        piece.coordinate = end
+        let capturedPiece;
         if (board[end[1]][end[0]] === null) {
             //logic to move piece
             board[start[1]][start[0]] = board[end[1]][end[0]]
-            piece.coordinate = end
             board[end[1]][end[0]] = piece
         } else {
             //logic to capture piece
             board[start[1]][start[0]] = null;
             capturedPiece = board[end[1]][end[0]]
-            piece.coordinate = end
             board[end[1]][end[0]] = piece;
         }
         this.setState({ board: board, squares: board.flat() })
@@ -107,23 +109,23 @@ class Game extends React.Component {
         // const checkmate = opponentMovesPossible.filter(move => kingMoves.forEach(kingMove => { move.toString() === kingMove.toString() }))
 
         if (check) {
-            const {players}= this.state
-            players.forEach(player=>{
-                if (player.isTurn){
+            const { players } = this.state
+            players.forEach(player => {
+                if (player.isTurn) {
                     player.inCheck = true
                 }
             })
-            this.setState({players})
+            this.setState({ players })
         } else {
-            const {players}= this.state
-            players.forEach(player=>{
-                if (player.isTurn){
+            const { players } = this.state
+            players.forEach(player => {
+                if (player.isTurn) {
                     player.inCheck = false
                 }
             })
-            this.setState({players})
+            this.setState({ players })
         }
-        console.log(this.state.players)
+        // console.log(this.state.players)
         // map through the squares to calculate all moves put it into the opponentMoves
         // check to see if the king is in that set of opponentMoves if so alert checked
         // generate all king moves and filter out all moves that match the moves in oppenent moves if array is empty CHECKMATE
@@ -143,7 +145,8 @@ class Game extends React.Component {
         if (piece === null) {
             console.log('no piece')
         } else if (this.validateMove(piece, [x, y], board)) {
-            this.movePiece(this.state.coordinates, [x, y])
+            this.movePiece(this.state.coordinates, [x, y], this.state.board)
+            this.pushMove({ start: this.state.coordinates, end: [x, y] })
             if (piece.label === 'pawn') {
                 piece.hasMoved = true
             }
@@ -155,9 +158,29 @@ class Game extends React.Component {
     componentDidMount() {
         const board = this.initializeBoardState();
         this.setState({ board })
+        this.room = queryString.parse(this.props.location.search).room
+        this.getMove()
     }
 
-    componentDidUpdate() {}
+    pushMove = (move) => {
+        connect().then((socket) => {
+            socket.emit('move', { move, room: this.room })
+        })
+    }
+
+    getMove = () => {
+        connect().then((socket) => {
+            setTimeout(() => {
+                socket.on('getMove', move => {
+                    this.movePiece(move.start, move.end, this.state.board)
+                })
+            }, 5000)
+        })
+    }
+
+    componentDidUpdate() {
+       
+    }
     render() {
         return (
             <>
@@ -169,4 +192,4 @@ class Game extends React.Component {
     }
 }
 
-export default Game;
+export default withRouter(Game);
