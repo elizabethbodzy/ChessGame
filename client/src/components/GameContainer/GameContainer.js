@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, useContext } from "react";
-import { withRouter } from "react-router";
 import { Grid } from "semantic-ui-react";
 import Game from "../Game/Game";
 import Chat from "../Chat/Chat";
@@ -43,4 +42,4 @@ const GameContainer = () => {
   );
 };
 
-export default withRouter(GameContainer);
+export default GameContainer;
