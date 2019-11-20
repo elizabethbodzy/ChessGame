@@ -1,9 +1,10 @@
 import React from 'react';
 import Board from './Board/Board';
 import initializeBoard from '../../helper/initializeBoard';
+import io from 'socket.io-client';
 import queryString from 'query-string';
 import { withRouter } from 'react-router'
-import connect, { join } from '../../socket';
+import connect from '../../socket';
 class Game extends React.Component {
     state = {
         gameOver: false,
@@ -160,8 +161,7 @@ class Game extends React.Component {
     componentDidMount() {
         const board = this.initializeBoardState();
         this.setState({ board })
-        this.room = queryString.parse(this.props.location.search).room;
-        this.name = queryString.parse(this.props.location.search).name;
+        this.room = queryString.parse(this.props.location.search).room
         // const {name,room} = this.room
         // this.socket.emit("join", { name, room }, error => {
         //     if (error) {
@@ -183,15 +183,18 @@ class Game extends React.Component {
     }
 
     getMove = () => {
-        join({ room: this.room, name: this.name }).then(socket => {
-          socket.on("getMove", move => {
-            console.log(move);
-          });
-        });
+        connect().then((socket) => {
+            socket.on('getMove', move => {
+                console.log(move)
+            })
+        })
     }
 
     componentDidUpdate() {
-   
+    //     this.socket.on('move', move => {
+    //         console.log(move)
+    //         // this.movePiece(move.start, move.end)
+    //     })     
     }
     render() {
         return (
