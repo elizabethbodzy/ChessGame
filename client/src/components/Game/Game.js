@@ -48,8 +48,7 @@ class Game extends React.Component {
 
     movePiece = (start = [], end = [], board = []) => {
         const piece = board[start[1]][start[0]];
-        console.log(board)
-        console.log(piece)
+        piece.coordinate = end
         let capturedPiece;
         if (board[end[1]][end[0]] === null) {
             //logic to move piece
@@ -160,17 +159,6 @@ class Game extends React.Component {
         const board = this.initializeBoardState();
         this.setState({ board })
         this.room = queryString.parse(this.props.location.search).room
-        // const {name,room} = this.room
-        // this.socket.emit("join", { name, room }, error => {
-        //     if (error) {
-        //       alert(error);
-        //     }
-        //   });
-
-        // this.socket.on('move', move => {
-        //     console.log(move)
-        //     // this.movePiece(move.start, move.end)
-        // })             
         this.getMove()
     }
 
@@ -184,18 +172,14 @@ class Game extends React.Component {
         connect().then((socket) => {
             setTimeout(() => {
                 socket.on('getMove', move => {
-                    console.log(move)
+                    this.movePiece(move.start, move.end, this.state.board)
                 })
             }, 5000)
         })
     }
 
     componentDidUpdate() {
-        //     this.socket.on('move', move => {
-        //         console.log(move)
-        //         // this.movePiece(move.start, move.end)
-        //     })     
-        // this.getMove(this.state.board,this.movePiece)
+       
     }
     render() {
         return (
