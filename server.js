@@ -60,21 +60,19 @@ io.on("connection", socket => {
 
     socket.on('join', ({ name, room }, callback) => {
         // room = room;
-        console.log('yep connected')
+        console.log({prevUsers:users})
         // const chatRooms = {
         //     [room] : []
         // }
-
-        // chatRooms[room] = [].concat(name)
-
-        const { error, user } = addUser({ id: socket.id, name, room });
-
         const amountOfUsers = getUsersInRoom(room).length;
-
-        if (amountOfUsers > 2) {
+        // chatRooms[room] = [].concat(name)
+        if (amountOfUsers >= 2) {
             // console.log('what the ????')
             return;
         }
+        const { error, user } = addUser({ id: socket.id, name, room });
+
+        console.log({users})
 
         if (error) return callback(error);
 
@@ -95,11 +93,20 @@ io.on("connection", socket => {
         io.to(user.room).emit('message', { user: user.name, text: message });
 
         callback();
+<<<<<<< HEAD
+=======
+    });
+
+    socket.on("move", ({ move, room }) => {
+
+        socket.to(room).emit('getMove', move);
+        console.log(move, room)
+>>>>>>> master
     });
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id);
-        console.log('user left room')
+        console.log('disconnect', users)
 
         if (user) {
             io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` })

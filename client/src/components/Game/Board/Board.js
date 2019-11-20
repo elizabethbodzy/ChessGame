@@ -37,9 +37,9 @@ class Board extends React.Component {
                 style={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    width: '600px',
-                    height: '600px',
-                    marginLeft: '50px',
+                    width: '500px',
+                    height: '500px',
+                    marginLeft: '0px',
                     border: '1px solid black'
                 }}>
                 {squares}
