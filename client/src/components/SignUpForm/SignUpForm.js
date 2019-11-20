@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import API from '../../utils/API';
 import { email, password, minLength, required } from '../../utils/validators';
-// import Facebook from './Facebook';
 import './signUp.css';
 
 class SignUpForm extends Component {
@@ -110,15 +109,66 @@ class SignUpForm extends Component {
                     <div className='title-square'>T</div>
                     <div className='title-square'>E</div>
                 </div>
+                {/* ===== RESPONSIVE SIGN UP/SIGN IN FORM ===== */}
+                <div className='container responsive-container responsive-container-signup'>
+                    <div className='responsive-signup'>
+                        <form action='#' className='responsive-form'>
+                            <h1>Create Account</h1>
+                            <input
+                                value={this.state.userName}
+                                name='userName'
+                                onChange={this.handleInputChange}
+                                type='text'
+                                placeholder='Username' />
+                            <input
+                                validators={[required, email]}
+                                value={this.state.email}
+                                name='email'
+                                onChange={this.handleInputChange}
+                                type='email'
+                                placeholder='Email' />
+                            <input
+                                validators={[required, password, minLength(6)]}
+                                value={this.state.password}
+                                name='password'
+                                onChange={this.handleInputChange}
+                                type='password'
+                                placeholder='Password' />
+                            <button className='signup' onClick={this.handleSignUp}>Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+                <div className='separator'>Or</div>
+                <div className='container responsive-container responsive-container-signin'>
+                    <div className='responsive-signin'>
+                        <form action='#' className='responsive-form'>
+                            <h1>Sign In</h1>
+                            <input
+                                value={this.state.email}
+                                name='email'
+                                onChange={this.handleInputChange}
+                                type='email'
+                                placeholder='Email' />
+                            <input
+                                value={this.state.password}
+                                name='password'
+                                onChange={this.handleInputChange}
+                                type='password'
+                                placeholder='Password' />
+                            <a href='#'>Forgot your password?</a>
+                            <button className='signin' onClick={this.handleSignIn}>Sign In</button>
+                        </form>
+                    </div>
+                </div>
+                {/* ===== DESKTOP CONTAINER ===== */}
                 <div className={this.state.toggle ? 'container right-panel-active' : 'container'} id='container'>
                     {/* ===== SIGN UP FORM ===== */}
                     <div className='form-container sign-up-container'>
                         <form action='#'>
                             <h1>Create Account</h1>
-                            <div class="social-container">
-                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                {/* <Facebook handleSignUp={this.handleSignUp} pathname='/auth/signup' /> */}
-                                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                            <div className="social-container">
+                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
+                                <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
                             </div>
                             <span>or create an account</span>
                             <input
@@ -149,8 +199,7 @@ class SignUpForm extends Component {
                         <form action='#'>
                             <h1>Sign In</h1>
                             <div class="social-container">
-                                {/* <Facebook handleSignIn={this.handleSignIn} pathname='/auth/signin' /> */}
-                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
                                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                             </div>
                             <span>or sign in using your email</span>

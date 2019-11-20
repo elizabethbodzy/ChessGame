@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 import Navbar from '../Navbar/Navbar';
-import { Segment, Button, Grid } from 'semantic-ui-react';
+import { Segment, Grid } from 'semantic-ui-react';
 import './profile.css';
 import Join from '../Join/Join';
 import Chat from '../Chat/Chat';
@@ -11,13 +11,9 @@ class Profile extends Component {
         super(props);
         this.state = {
             toggleChat: false,
-            userName: ''
-            // totalGames: this.state.totalGames,
-            // points: this.state.points,
-            // wins: this.state.wins,
-            // losses: this.state.losses,
-            // draws: this.state.draws
+            userName: this.props.userName
         }
+        console.log(this.state);
     };
 
     componentDidMount() {
@@ -31,7 +27,7 @@ class Profile extends Component {
     };
 
     toggleChat = () => {
-        this.setState({toggleChat : true})
+        this.setState({toggleChat : true});
     };
 
     render() {
@@ -47,10 +43,10 @@ class Profile extends Component {
                                 <div className='avatar-user-container'>
                                     <div className='avatar'>
                                         <img src='./images/default-profile.png' />
-                                        <a href='#'><i class="fas fa-camera"></i> Add Photo</a>
+                                        <a href='#'><i className="fas fa-camera"></i> Add Photo</a>
                                     </div>
                                     <div className='user-info'>
-                                        <h3>{this.state.userName}</h3>
+                                        <h3>{this.props.userName}</h3>
                                     </div>
                                 </div>
                             </Segment>
