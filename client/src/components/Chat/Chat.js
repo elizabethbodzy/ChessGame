@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { withRouter } from "react-router";
-import {Message} from "semantic-ui-react";
+import { Message } from "semantic-ui-react";
 import queryString from "query-string";
-import io from "socket.io-client";
 
 import "./Chat.css";
 import InfoBar from "../InfoBar/InfoBar";
@@ -10,12 +8,13 @@ import Input from "../Input/Input";
 import Messages from "../Messages/Messages";
 
 import { useChatState } from '../GameContainer/GameContainer'
+import connect from "../../socket";
 
-let socket;
+const socket = connect()
 
-const Chat = ({ location, history }) => {
-  const [name, setName] = useState("");
-  const [room, setRoom] = useState("");
+
+const Chat = ({ location, name ,room}) => {
+
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -28,74 +27,73 @@ const Chat = ({ location, history }) => {
   //     console.log(state)
   // }, [])
 
-//   useEffect(() => {
-      
-//       socket.on('connect', () => console.log('yaahahahhahahah'))
-//       console.log(socket)
-//   }, [])
+  //   useEffect(() => {
 
-  
+  //       socket.on('connect', () => console.log('yaahahahhahahah'))
+  //       console.log(socket)
+  //   }, [])
+
+
 
   useEffect(() => {
-    console.log(location);
-      
-    const { name, room } = queryString.parse(location.search);
 
-    socket = io(ENDPOINT);
-    console.log(socket);
+    // const { name, room } = queryString.parse(location.search);
 
 
-    setName(name);
-    setRoom(room);
+    // console.log(socket);
 
-    socket.emit("join", { name, room }, error => {
-      if (error) {
-        alert(error);
-      }
-    });
+
+    // setName(name);
+    // setRoom(room);
+
+    // socket.emit("join", { name, room }, error => {
+    //   if (error) {
+    //     alert(error);
+    //   }
+    // });
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on("message", message => {
-      setMessages([...messages, message]);
-    });
+    connect().then(socket => {
+      socket.on("message", message => {
+        setMessages([...messages, message]);
+      });
 
-    socket.on("join", ({status, statusMessage, id}) => {
-      if(status === 403 && id === socket.id) {
-        alert(statusMessage);
-        history.replace('/profile');
-      }
-    } )
-
-    socket.on("roomData", ({ users }) => {
-      console.log(users)
+      socket.on("roomData", ({ users }) => {
+        console.log(users)
         // dispatch({ type: "SET_USERS", users })
-    
-      setUsers(users);
-    
-    });
 
-    
+        setUsers(users);
+
+      });
+    })
+
+
+
 
     return () => {
-      socket.emit("disconnect");
+      connect().then(socket => {
+        socket.emit("disconnect");
 
-      socket.off();
+        socket.off();
+      })
+
     };
   }, [messages]);
 
-  
+
 
   //function for sending messages
   const sendMessage = event => {
     event.preventDefault();
 
     if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+      connect().then(socket => { socket.emit("sendMessage", message, () => setMessage("")); })
+      // socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
 
-//   console.log(message, messages);
+  //   console.log(message, messages);
   return (
     <div className="outerContainer">
       <div className="container">
@@ -106,7 +104,7 @@ const Chat = ({ location, history }) => {
           setMessage={setMessage}
           sendMessage={sendMessage}
         />
-        
+
         {/* {users.length > 2 ? (
             <Message negative>
             <Message.Header>We're sorry we can't apply that discount</Message.Header>

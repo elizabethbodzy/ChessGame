@@ -64,25 +64,22 @@ io.on("connection", socket => {
 
     socket.on('join', ({ name, room }, callback) => {
         // room = room;
-        console.log('yep connected')
+        console.log({prevUsers:users})
         // const chatRooms = {
         //     [room] : []
         // }
-
-        // chatRooms[room] = [].concat(name)
         const amountOfUsers = getUsersInRoom(room).length;
-
+        // chatRooms[room] = [].concat(name)
         if (amountOfUsers >= 2) {
-            socket.emit('join', {status: 403, statusMessage: 'Room is full. Cannot Join!', id: socket.id})
-            console.log('join', {status: 403, statusMessage: 'Room is full. Cannot Join!'})
+            // console.log('what the ????')
             return;
             
             
         }
-
-        
         const { error, user } = addUser({ id: socket.id, name, room });
-        
+
+        console.log({users})
+
         if (error) return callback(error);
 
         socket.join(user.room);
@@ -103,13 +100,17 @@ io.on("connection", socket => {
         io.to(user.room).emit('message', { user: user.name, text: message });
 
         callback();
+    });
 
+    socket.on("move", ({ move, room }) => {
 
+        socket.to(room).emit('getMove', move);
+        console.log(move, room)
     });
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id);
-        console.log('user left room')
+        console.log('disconnect', users)
 
         if (user) {
             io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` })
