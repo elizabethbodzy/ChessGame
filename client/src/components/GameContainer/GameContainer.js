@@ -12,9 +12,6 @@ import Join from "../Join/Join";
 
 // export const ChatContext = createContext()
 
-// export const useChatState = () => {
-//   return useContext(ChatContext)
-// }
 
 // function reducer(state, action) {
 //   switch (action.type) {
@@ -92,4 +89,4 @@ const GameContainer = ({ location }) => {
   );
 };
 
-export default withRouter(GameContainer);
+export default GameContainer;
