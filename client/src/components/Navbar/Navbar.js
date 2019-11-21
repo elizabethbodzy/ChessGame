@@ -4,7 +4,7 @@ import { Menu, Image } from "semantic-ui-react";
 class Navbar extends Component {
     
     state = { 
-        activeItem: "home",
+        activeItem: "profile",
         navigate: false
      };
 
@@ -31,18 +31,14 @@ class Navbar extends Component {
                     </Menu.Item>
 
                     <Menu.Item
-                        name="home"
-                        active={activeItem === "home"}
+                        name="profile"
+                        active={activeItem === "profile"}
                         onClick={this.handleItemClick}
+                        href='/profile'
                     />
                     <Menu.Item
                         name="messages"
                         active={activeItem === "messages"}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name="profile"
-                        active={activeItem === "profile"}
                         onClick={this.handleItemClick}
                     />
                     <Menu.Item
