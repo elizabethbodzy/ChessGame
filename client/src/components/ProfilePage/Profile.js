@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 import Navbar from '../Navbar/Navbar';
-import { Segment, Button, Divider, Grid } from 'semantic-ui-react';
+import { Segment, Grid } from 'semantic-ui-react';
 import './profile.css';
 import Join from '../Join/Join';
 import Chat from '../Chat/Chat';
@@ -10,29 +10,29 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            toggleChat: false
-            // userName: this.state.userName,
-            // totalGames: this.state.totalGames,
-            // points: this.state.points,
-            // wins: this.state.wins,
-            // losses: this.state.losses,
-            // draws: this.state.draws
+            toggleChat: false,
+            userName: this.props.userName
         }
+        console.log(this.state);
     };
 
     componentDidMount() {
         document.body.style.margin = '0';
         document.body.style.padding = '0';
         document.body.style.boxSizing = 'border-box';
-    }
+        document.body.style.display = 'flex';
+        document.body.style.flexDirection = 'column';
+        document.body.style.height = '100vh';
+        document.body.style.width = '100%';
+    };
 
     toggleChat = () => {
-        this.setState({toggleChat : true})
-    }
+        this.setState({toggleChat : true});
+    };
 
     render() {
         return (
-            <>
+            <div className='main-container'>
                 <Navbar />
                 <Grid className='page-container'>
                     <Grid.Row columns={2} className='profile-container'>
@@ -43,10 +43,10 @@ class Profile extends Component {
                                 <div className='avatar-user-container'>
                                     <div className='avatar'>
                                         <img src='./images/default-profile.png' />
-                                        <a href='#'><i class="fas fa-camera"></i> Add Photo</a>
+                                        <a href='#'><i className="fas fa-camera"></i> Add Photo</a>
                                     </div>
                                     <div className='user-info'>
-                                        <h3>Username</h3>
+                                        <h3>{this.props.userName}</h3>
                                     </div>
                                 </div>
                             </Segment>
@@ -86,7 +86,7 @@ class Profile extends Component {
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
-            </>
+            </div>
         )
     }
 

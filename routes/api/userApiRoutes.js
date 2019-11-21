@@ -8,4 +8,18 @@ router.get('/currentUser', passport.authenticate('jwt', { session: false }), use
 // GET USERS
 router.route('/').get(userController.findAll);
 
+// CHECKS TO SEE IF USER IS LOGGED IN UPON INITIAL LOAD IN
+isLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+        // IF NOT LOGGED IN REDIRECT TO HOME PAGE
+    }
+    res.redirect('/');
+};
+
+router.get('/logout', isLoggedIn, (req, res) => {
+    req.logout();
+    res.redirect('/');
+})
+
 module.exports = router;

@@ -61,6 +61,7 @@ router.post('/signin', (req, res) => {
                     res.json(
                         { 
                             success: true, 
+                            user: user,
                             token: 'JWT ' + token 
                         })
                 } else {

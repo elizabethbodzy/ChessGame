@@ -20,6 +20,7 @@ class SignUpForm extends Component {
     };
 
     componentDidMount() {
+        // console.log(this.props);
         document.body.style.height = '100vh';
         document.body.style.display = 'flex';
         document.body.style.flexDirection = 'column';
@@ -31,6 +32,8 @@ class SignUpForm extends Component {
     handleInputChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
+
 
     handleSignUp = (event) => {
         event.preventDefault();
@@ -45,7 +48,7 @@ class SignUpForm extends Component {
                     email: '',
                     password: ''
                 })
-                window.location.href = '/profile';
+                this.props.history.replace({ pathname: '/profile' });
             })
             .catch(err => console.log(err));
     };
@@ -75,7 +78,7 @@ class SignUpForm extends Component {
                 localStorage.setItem('jwtToken', res.data.token);
                 if (res.data.success) {
                     this.updateUser();
-                    window.location.href = '/profile';
+                    this.props.history.replace({ pathname: '/profile' });
                 }
                 if (res.data.error) {
                     this.setState({ error: res.data.error });
@@ -89,7 +92,7 @@ class SignUpForm extends Component {
         this.setState({
             toggle: !this.state.toggle
         })
-    }
+    };
 
     render() {
         return (
@@ -106,14 +109,66 @@ class SignUpForm extends Component {
                     <div className='title-square'>T</div>
                     <div className='title-square'>E</div>
                 </div>
+                {/* ===== RESPONSIVE SIGN UP/SIGN IN FORM ===== */}
+                <div className='container responsive-container responsive-container-signup'>
+                    <div className='responsive-signup'>
+                        <form action='#' className='responsive-form'>
+                            <h1>Create Account</h1>
+                            <input
+                                value={this.state.userName}
+                                name='userName'
+                                onChange={this.handleInputChange}
+                                type='text'
+                                placeholder='Username' />
+                            <input
+                                validators={[required, email]}
+                                value={this.state.email}
+                                name='email'
+                                onChange={this.handleInputChange}
+                                type='email'
+                                placeholder='Email' />
+                            <input
+                                validators={[required, password, minLength(6)]}
+                                value={this.state.password}
+                                name='password'
+                                onChange={this.handleInputChange}
+                                type='password'
+                                placeholder='Password' />
+                            <button className='signup' onClick={this.handleSignUp}>Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+                <div className='separator'>Or</div>
+                <div className='container responsive-container responsive-container-signin'>
+                    <div className='responsive-signin'>
+                        <form action='#' className='responsive-form'>
+                            <h1>Sign In</h1>
+                            <input
+                                value={this.state.email}
+                                name='email'
+                                onChange={this.handleInputChange}
+                                type='email'
+                                placeholder='Email' />
+                            <input
+                                value={this.state.password}
+                                name='password'
+                                onChange={this.handleInputChange}
+                                type='password'
+                                placeholder='Password' />
+                            <a href='#'>Forgot your password?</a>
+                            <button className='signin' onClick={this.handleSignIn}>Sign In</button>
+                        </form>
+                    </div>
+                </div>
+                {/* ===== DESKTOP CONTAINER ===== */}
                 <div className={this.state.toggle ? 'container right-panel-active' : 'container'} id='container'>
                     {/* ===== SIGN UP FORM ===== */}
                     <div className='form-container sign-up-container'>
                         <form action='#'>
                             <h1>Create Account</h1>
-                            <div class="social-container">
-                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                            <div className="social-container">
+                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
+                                <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
                             </div>
                             <span>or create an account</span>
                             <input
@@ -144,7 +199,7 @@ class SignUpForm extends Component {
                         <form action='#'>
                             <h1>Sign In</h1>
                             <div class="social-container">
-                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
                                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                             </div>
                             <span>or sign in using your email</span>

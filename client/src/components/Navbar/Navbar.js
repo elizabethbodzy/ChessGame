@@ -3,9 +3,18 @@ import { Menu, Image } from "semantic-ui-react";
 
 class Navbar extends Component {
     
-    state = { activeItem: "home" };
+    state = { 
+        activeItem: "profile",
+        navigate: false
+     };
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
+
+    handleLogOut = () => {
+        localStorage.clear('jwtToken');
+        this.setState({ navigate: true });
+        window.location.href = '/';
+    };
 
     componentDidMount () {
         document.body.style.height = "inherit";
@@ -22,18 +31,14 @@ class Navbar extends Component {
                     </Menu.Item>
 
                     <Menu.Item
-                        name="home"
-                        active={activeItem === "home"}
+                        name="profile"
+                        active={activeItem === "profile"}
                         onClick={this.handleItemClick}
+                        href='/profile'
                     />
                     <Menu.Item
                         name="messages"
                         active={activeItem === "messages"}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name="profile"
-                        active={activeItem === "profile"}
                         onClick={this.handleItemClick}
                     />
                     <Menu.Item

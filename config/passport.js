@@ -4,6 +4,16 @@ const User = require('../model/User');
 const secret = require('./secret');
 
 module.exports = (passport) => {
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => {
+            done(err, user);
+        });
+    });
+
     const opts = {};
 
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');

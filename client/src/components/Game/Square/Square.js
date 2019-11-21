@@ -10,7 +10,7 @@ class Square extends React.Component {
                 style={{
                     backgroundImage: this.color,
                     height: '100%',
-                    width: '100%'
+                    width: '100%',
                 }}
             >
                 {this.props.children}

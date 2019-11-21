@@ -35,7 +35,7 @@ app.use(cors());
 // const io = socketio(server);
 
 // PASSPORT CONFIG
-require("./config/passport")(passport)
+require("./config/passport")(passport);
 
 // SENDING EVERY OTHER REQUEST TO THE REACT APP AND DEFINE ANY API ROUTES BEFORE THIS RUNS
 app.get("*", (req, res) => {
@@ -54,13 +54,9 @@ server.listen(PORT, () => {
 
     );
 });
-
-// let room;
-
-
+// SOCKET CONNECTION
 io.on("connection", socket => {
     console.log('We have a new connection!!');
-
 
     socket.on('join', ({ name, room }, callback) => {
         // room = room;
@@ -91,7 +87,6 @@ io.on("connection", socket => {
         io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
 
         callback();
-
     })
 
     socket.on("sendMessage", (message, callback) => {
@@ -115,15 +110,7 @@ io.on("connection", socket => {
         if (user) {
             io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.` })
             io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) })
-
         }
     })
 
 });
-
-
-
-
-
-
-
