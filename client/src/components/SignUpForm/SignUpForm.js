@@ -43,12 +43,9 @@ class SignUpForm extends Component {
             password: this.state.password
         })
             .then(res => {
-                this.setState({
-                    userName: '',
-                    email: '',
-                    password: ''
-                })
-                this.props.history.replace({ pathname: '/profile' });
+                this.props.history.replace({ 
+                    pathname: '/profile',
+                    state: { userName: this.state.userName } });
             })
             .catch(err => console.log(err));
     };
@@ -76,9 +73,12 @@ class SignUpForm extends Component {
         axios.post('/auth/signin', { email, password })
             .then(res => {
                 localStorage.setItem('jwtToken', res.data.token);
+                // console.log(res.data)
                 if (res.data.success) {
                     this.updateUser();
-                    this.props.history.replace({ pathname: '/profile' });
+                    this.props.history.replace({ 
+                        pathname: '/profile',
+                        state: { userName: res.data.user.userName } });
                 }
                 if (res.data.error) {
                     this.setState({ error: res.data.error });
