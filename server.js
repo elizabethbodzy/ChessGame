@@ -93,15 +93,12 @@ io.on("connection", socket => {
         io.to(user.room).emit('message', { user: user.name, text: message });
 
         callback();
-<<<<<<< HEAD
-=======
     });
 
     socket.on("move", ({ move, room }) => {
 
         socket.to(room).emit('getMove', move);
         console.log(move, room)
->>>>>>> master
     });
 
     socket.on('disconnect', () => {
