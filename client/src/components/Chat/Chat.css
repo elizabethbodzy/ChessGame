@@ -30,5 +30,6 @@
   @media (min-width: 480px) and (max-width: 1200px) {
     .container {
       width: 100%;
+      /* hello */
     }
   }
