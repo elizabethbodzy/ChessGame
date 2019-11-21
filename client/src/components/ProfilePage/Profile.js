@@ -13,7 +13,7 @@ class Profile extends Component {
             toggleChat: false,
             userName: this.props.userName
         }
-        console.log(this.state);
+        console.log(this.props);
     };
 
     componentDidMount() {
@@ -46,7 +46,7 @@ class Profile extends Component {
                                         <a href='#'><i className="fas fa-camera"></i> Add Photo</a>
                                     </div>
                                     <div className='user-info'>
-                                        <h3>{this.props.userName}</h3>
+                                        <h3>{this.props.location.state.userName}</h3>
                                     </div>
                                 </div>
                             </Segment>
