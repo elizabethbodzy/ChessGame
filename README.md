@@ -41,5 +41,3 @@ Sign up or create an account to demo our fun and challenging chess game!
 
 
 Project Link: [https://github.com/elizabethbodzy/ChessGame](https://github.com/elizabethbodzy/ChessGame)
-
-
