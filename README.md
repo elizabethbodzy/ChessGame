@@ -30,6 +30,13 @@
 ![](/assets/images/recording.gif)
 
  Chess Game is an application created with react that allows players to compete against eachother playing a game of chess. Utilizing socket.io, players will compete in real-time. A message room is available between players/spectators. Ranking will also be implemented in order to match players into their specific skill level.
+ 
+ # Screenshots/Live Recording
+
+![](/public/images/checkmate-home)
+![](/assets/images/inner-page.png)
+![](/assets/images/effects-page.png)
+![](/assets/images/recording.gif)
 
 ### Built With
 This section lists the major frameworks that were used to build our project. 
@@ -38,10 +45,6 @@ This section lists the major frameworks that were used to build our project.
 * [Mongo](https://www.mongodb.com/) 
 * [Mongoose](https://mongoosejs.com/)
 * [Socket.io](https://socket.io/)
-
-## Challenges
-The challenges our team faced within this project were:
-
 
 <!-- DEMO -->
 ## Demo
