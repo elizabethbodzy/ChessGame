@@ -10,7 +10,7 @@
 
 ## About The Project
 
-Chess Game is an application created with react that allows players to compete against eachother playing a game of chess. Utilizing socket.io, players will compete in real-time. A message room is available between players/spectators. Ranking will also be implemented in order to match players into their specific skill level.
+Checkmate is an application created with react that allows players to compete against eachother playing a game of chess. Utilizing socket.io, players will compete in real-time. A message room is available between players/spectators. Ranking will also be implemented in order to match players into their specific skill level.
  
  ### Screenshots/Live Recording
 
